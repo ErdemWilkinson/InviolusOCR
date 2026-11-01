@@ -651,6 +651,40 @@ B is the model published as InviolusOCR on Hugging Face:
 [inviolus/InviolusOCR](https://huggingface.co/inviolus/InviolusOCR). Files: `artifacts_B_1031/`.
 Logs and the full results: `artifacts/night-2026-10-31/` (`benchmark.json`).
 
+### 2026-11-01: D, B plus the donut 200k lines
+
+B trained for 8 more hours (`OCR_LR=7e-4`, cosine, CPU capped to keep the
+laptop cool) with **47,613 extra lines** from Turkish recognition 200k v4
+(turgutguvercin/donut, CC BY-SA 4.0): the rows of its recommended train list
+that have 1-24 characters from our alphabet (`scripts/prepare_donut.py`). A
+new test set, `donut_test`, holds the 2,563 rows of its test list that fit
+the same rule.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-1101-donut_test-dark.svg">
+  <img alt="Exact-line accuracy on the donut 200k test rows for four model versions" src="docs/benchmark-1101-donut_test-light.svg">
+</picture>
+
+| Model | Held-out int8 | TS-TR int8 | Donut test float | Donut test **int8** | Donut test int8 CER |
+|---|---:|---:|---:|---:|---:|
+| 2026-10-25 (LSTM) | 32.1% | 48.7% | 10.8% | 6.7% | 73.2% |
+| B, conv, 2026-10-31 | **78.4%** | **58.2%** | 10.1% | 9.3% | 68.6% |
+| **D, conv + donut, 2026-11-01** | 77.3% | 56.2% | **50.0%** | **46.5%** | **12.6%** |
+
+- **D reads printed documents.** On the donut test rows (dates, amounts,
+  headings, codes, many fonts and print effects) the int8 file goes from
+  9.3% to 46.5% exact, and its character error rate falls from 68.6% to
+  12.6%. Every earlier model had failed on this kind of text.
+- **D costs 1 to 2 points elsewhere:** 77.3% on held-out lines (B: 78.4%)
+  and 56.2% on TS-TR scene text (B: 58.2%).
+- **Size and int8 behaviour are unchanged:** same architecture, 598 KB, and
+  int8 still loses only 1 to 3.5 points.
+
+More charts: `docs/benchmark-1101-heldout-*.svg` and
+`docs/benchmark-1101-tstr_test-*.svg`. Results: `artifacts/night-2026-11-01/benchmark.json`.
+D's training data adds CC BY-SA 4.0 (already covered by the CC BY-NC-SA 4.0
+model licence). The Hugging Face model is still B.
+
 ## Hardware integration status
 
 This pipeline was deliberately built **before** committing to firmware
