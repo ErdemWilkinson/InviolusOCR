@@ -14,14 +14,21 @@ firmware.** Newest model (2026-10-31, convolutional, 560,954 parameters,
 **58.2%** of unseen TS-TR scene-text crops exactly, losing about 1 point to
 quantization where the older LSTM models lost 30 to 48 points. See
 [2026-10-31: InviolusOCR conv model](#2026-10-31-inviolusocr-conv-model-no-orkungedik-data).
+Its continuation **D** (2026-11-01, same size) adds printed-document lines and
+reads **46.5%** of the donut 200k test rows exactly as int8 (B: 9.3%), at a
+cost of 1 to 2 points on the other sets. See
+[2026-11-01: D](#2026-11-01-d-b-plus-the-donut-200k-lines). The model on
+Hugging Face is still B.
 See [Hardware integration status](#hardware-integration-status)
 below for exactly what's blocking integration and what's already decided.
 
 ## Where the model stands
 
-Three versions of the same model, each trained from the previous one's
-weights, scored on data none of them was trained on (last update:
-2026-10-09).
+The first three versions of the model (CNN + BiLSTM), each trained from the
+previous one's weights, scored on data none of them was trained on. This
+chart stops at 2026-10-09. The current models and their scores are under
+[Results](#results), from
+[2026-10-31](#2026-10-31-inviolusocr-conv-model-no-orkungedik-data) on.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-progress-dark.svg">
