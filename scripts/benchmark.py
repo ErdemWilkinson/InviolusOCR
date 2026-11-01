@@ -7,6 +7,8 @@ Every model is measured on identical rows so versions can be compared:
                  that give the labels space plates inconsistently
   heldout     -- the 2026-10-25 held-out manifest minus orkungedik rows, which
                  is the fixed validation set of every run since 2026-10-10
+  donut_test  -- Turkish recognition 200k v4 test split, recommended rows of
+                 1-24 characters (synthetic documents, never trained on)
 
     python scripts/benchmark.py --model old_1009=artifacts_backup_2026-10-09 --model A=artifacts_A --out results.json
 """
@@ -25,6 +27,7 @@ from evaluate import edit_distance, greedy_ctc_decode, load_image
 ROOT = Path(__file__).resolve().parents[1]
 HELDOUT_MANIFEST = ROOT / "artifacts_backup_2026-10-25" / "split_manifest.json"
 EXCLUDED_SOURCES = {"orkungedik_lines"}
+DONUT_TEST = Path("D:/ai-egitim-veri/ocr_new/donut_test_labels.csv")  # from prepare_donut.py
 
 
 def read_csv(path: Path) -> list[dict]:
@@ -38,6 +41,8 @@ def test_sets() -> dict[str, list[dict]]:
     sets = {"tstr_test": read_csv(ROOT / "data" / "tstr_test_labels.csv"), "heldout": heldout}
     if (ROOT / "data" / "plates_test_labels.csv").exists():
         sets["plates"] = read_csv(ROOT / "data" / "plates_test_labels.csv")
+    if DONUT_TEST.exists():
+        sets["donut_test"] = read_csv(DONUT_TEST)
     return sets
 
 
