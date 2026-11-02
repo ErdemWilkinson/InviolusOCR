@@ -18,6 +18,7 @@ ARTIFACTS = Path(os.environ.get("OCR_ARTIFACTS", ROOT / "artifacts"))
 # + a dilated residual Conv1D sequence block, no recurrent layers (PP-OCRv3
 # moved away from LSTM too); conv/batch-norm ops quantize to int8 far better.
 ARCH = os.environ.get("OCR_ARCH", "lstm")
+WIDTH = float(os.environ.get("OCR_WIDTH", "1"))  # filter multiplier for smaller conv models
 if os.environ.get("OCR_THREADS"):
     tf.config.threading.set_intra_op_parallelism_threads(int(os.environ["OCR_THREADS"]))
     tf.config.threading.set_inter_op_parallelism_threads(2)
@@ -122,33 +123,33 @@ def recognition_body(image_input: tf.Tensor, arch: str | None = None) -> tf.Tens
     ops) once the converter can fuse each direction of each layer. See
     DECISION_NOTES.md.
     """
-    x = tf.keras.layers.Conv2D(32, 3, padding="same", activation="relu", kernel_regularizer=L2)(image_input)
+    x = tf.keras.layers.Conv2D(int(32 * WIDTH), 3, padding="same", activation="relu", kernel_regularizer=L2)(image_input)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.MaxPooling2D((2, 2))(x)  # 16 x 80
 
-    x = tf.keras.layers.Conv2D(64, 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
+    x = tf.keras.layers.Conv2D(int(64 * WIDTH), 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.MaxPooling2D((2, 2))(x)  # 8 x 40
     x = tf.keras.layers.SpatialDropout2D(0.15)(x)
 
-    x = tf.keras.layers.Conv2D(96, 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
+    x = tf.keras.layers.Conv2D(int(96 * WIDTH), 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.MaxPooling2D((2, 1))(x)  # 4 x 40
 
-    x = tf.keras.layers.Conv2D(128, 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
+    x = tf.keras.layers.Conv2D(int(128 * WIDTH), 3, padding="same", activation="relu", kernel_regularizer=L2)(x)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.MaxPooling2D((2, 1))(x)  # 2 x 40
     x = tf.keras.layers.SpatialDropout2D(0.2)(x)
 
     x = tf.keras.layers.Permute((2, 1, 3))(x)  # width, height, channels
-    x = tf.keras.layers.Reshape((TIME_STEPS, 2 * 128))(x)
-    x = tf.keras.layers.Dense(128, activation="relu", kernel_regularizer=L2)(x)
+    x = tf.keras.layers.Reshape((TIME_STEPS, 2 * int(128 * WIDTH)))(x)
+    x = tf.keras.layers.Dense(int(128 * WIDTH), activation="relu", kernel_regularizer=L2)(x)
     if (arch or ARCH) == "conv":
         # Residual dilated Conv1D blocks: receptive field 33 of the 40 steps,
         # enough context for CTC without a recurrent layer.
         x = tf.keras.layers.Dropout(0.2)(x)
         for dilation in (1, 2, 4, 1):
-            y = tf.keras.layers.Conv1D(128, 5, padding="same", dilation_rate=dilation,
+            y = tf.keras.layers.Conv1D(int(128 * WIDTH), 5, padding="same", dilation_rate=dilation,
                                        kernel_regularizer=L2)(x)
             y = tf.keras.layers.BatchNormalization()(y)
             y = tf.keras.layers.ReLU()(y)
@@ -419,7 +420,7 @@ def main() -> None:
         validation_data=(validation_inputs, np.zeros((len(validation_idx), 1), dtype=np.float32)),
         epochs=150,
         callbacks=[
-            tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=10, restore_best_weights=True),
+            tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=int(os.environ.get("OCR_PATIENCE", "10")), restore_best_weights=True),
             *([] if use_cosine else
               [tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=4, min_lr=1e-5)]),
             tf.keras.callbacks.ModelCheckpoint(str(checkpoint_path), monitor="val_loss",

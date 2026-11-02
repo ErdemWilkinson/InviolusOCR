@@ -1,0 +1,56 @@
+{
+  "T_tiny": {
+    "params": 144330,
+    "tflite_bytes": 171112,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.3570741097208855,
+      "cer": 0.2990055066984466
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.3262752646775746,
+      "cer": 0.31256677899235635
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.6626147357975688,
+      "cer": 0.1309282828365609
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.6440916232531216,
+      "cer": 0.14134452266413158
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.004,
+      "cer": 0.5796366708914238
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.024,
+      "cer": 0.5123126338329764
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.012,
+      "cer": 0.5775242923531897
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.028,
+      "cer": 0.5203426124197003
+    },
+    "donut_test/float": {
+      "samples": 2563,
+      "exact": 0.2298088177916504,
+      "cer": 0.22396433786795789
+    },
+    "donut_test/int8": {
+      "samples": 2563,
+      "exact": 0.20132657042528287,
+      "cer": 0.2414879717162401
+    }
+  }
+}

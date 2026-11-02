@@ -56,3 +56,11 @@ the share-alike term (esengul3), and are released under
 A model trained only on the synthetic lines, your own photos and the Zenodo
 dataset is not bound by the non-commercial term. Train it by leaving
 `data/tstr_labels.csv` out of `OCR_LABELS_CSV`.
+
+## Models published on Hugging Face from 2026-11-02 (D and tiny)
+
+Both are released under **CC BY-NC-SA 4.0**. Their training data adds
+Turkish recognition 200k v4 by turgutguvercin (donut), CC BY-SA 4.0, to TS-TR
+and STS-TR (CC BY-NC 4.0), esengul3 (CC BY-SA 4.0), the Zenodo Turkish OCR Text
+Image Dataset (CC BY 4.0) and our synthetic lines. The orkungedik data is
+excluded.

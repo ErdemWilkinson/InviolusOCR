@@ -1,0 +1,56 @@
+{
+  "F_conv_donut": {
+    "params": 560954,
+    "tflite_bytes": 597816,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.5808469682386911,
+      "cer": 0.17547464453028686
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.5548604427333975,
+      "cer": 0.19306320374784253
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.7859092036715455,
+      "cer": 0.09399201776743348
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.7707764822624659,
+      "cer": 0.10046631317560092
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.02,
+      "cer": 0.5027460920997042
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.084,
+      "cer": 0.44967880085653106
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.012,
+      "cer": 0.5420363329108576
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.052,
+      "cer": 0.5096359743040685
+    },
+    "donut_test/float": {
+      "samples": 2563,
+      "exact": 0.5138509559110418,
+      "cer": 0.10811364742653652
+    },
+    "donut_test/int8": {
+      "samples": 2563,
+      "exact": 0.4646898166211471,
+      "cer": 0.12617528757717827
+    }
+  }
+}

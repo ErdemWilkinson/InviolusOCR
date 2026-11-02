@@ -1,0 +1,164 @@
+{
+  "B_conv": {
+    "params": 560954,
+    "tflite_bytes": 597816,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.5996150144369586,
+      "cer": 0.166762554450563
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.5822906641000962,
+      "cer": 0.18089915344785074
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.7935169106094435,
+      "cer": 0.0860343711328378
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.7839245844703547,
+      "cer": 0.09139410429352325
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.0,
+      "cer": 0.866497676383608
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.0,
+      "cer": 0.8490364025695931
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.0,
+      "cer": 0.8601605407689058
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.0,
+      "cer": 0.841541755888651
+    },
+    "donut_test/float": {
+      "samples": 2563,
+      "exact": 0.10066328521264144,
+      "cer": 0.6754284835908078
+    },
+    "donut_test/int8": {
+      "samples": 2563,
+      "exact": 0.09325009754194304,
+      "cer": 0.6858043194220275
+    }
+  },
+  "D_conv_donut": {
+    "params": 560954,
+    "tflite_bytes": 597816,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.5822906641000962,
+      "cer": 0.1768718665242048
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.5615976900866217,
+      "cer": 0.18772088435933262
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.7839245844703547,
+      "cer": 0.09448373640602847
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.7730091788638055,
+      "cer": 0.09981068832414093
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.024,
+      "cer": 0.5069708491761724
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.088,
+      "cer": 0.44967880085653106
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.02,
+      "cer": 0.5310519645120405
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.048,
+      "cer": 0.4866167023554604
+    },
+    "donut_test/float": {
+      "samples": 2563,
+      "exact": 0.500195083886071,
+      "cer": 0.11047062741782594
+    },
+    "donut_test/int8": {
+      "samples": 2563,
+      "exact": 0.4650799843932891,
+      "cer": 0.12558604257935593
+    }
+  },
+  "E_conv_donut": {
+    "params": 560954,
+    "tflite_bytes": 597816,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.582771896053898,
+      "cer": 0.1773650036985288
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.5601539942252165,
+      "cer": 0.1894468644694666
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.7832630447366244,
+      "cer": 0.09520492374263446
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.7712726370627636,
+      "cer": 0.09980249301349768
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.02,
+      "cer": 0.5044359949302915
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.08,
+      "cer": 0.4582441113490364
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.016,
+      "cer": 0.5306294888043938
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.04,
+      "cer": 0.49839400428265523
+    },
+    "donut_test/float": {
+      "samples": 2563,
+      "exact": 0.49551307062036676,
+      "cer": 0.11236645914995004
+    },
+    "donut_test/int8": {
+      "samples": 2563,
+      "exact": 0.4588373000390168,
+      "cer": 0.12614966822944687
+    }
+  }
+}

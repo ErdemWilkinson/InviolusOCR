@@ -1,4 +1,10 @@
-# InviolusOCR
+# InviolusOCR: tiny Turkish OCR for microcontrollers
+
+**Türkçe:** Mikrodenetleyiciler için küçük Türkçe OCR modeli. Tek satır basılı
+Türkçe metni okur. Tam int8 TensorFlow Lite dosyası 598 KB, küçük sürümü 171 KB.
+
+*Keywords: Turkish OCR, Türkçe OCR, tiny OCR, text recognition, CTC, TFLite,
+int8, TinyML, ESP32, microcontroller.*
 
 **InviolusOCR** (formerly "Turkish TinyML Line OCR") is a compact, full-int8 CNN-CTC recognizer for a single horizontal line of
 printed Turkish text, sized to eventually run on a microcontroller-class
@@ -17,8 +23,11 @@ quantization where the older LSTM models lost 30 to 48 points. See
 Its continuation **D** (2026-11-01, same size) adds printed-document lines and
 reads **46.5%** of the donut 200k test rows exactly as int8 (B: 9.3%), at a
 cost of 1 to 2 points on the other sets. See
-[2026-11-01: D](#2026-11-01-d-b-plus-the-donut-200k-lines). The model on
-Hugging Face is still B.
+[2026-11-01: D](#2026-11-01-d-b-plus-the-donut-200k-lines). D is the model on
+[Hugging Face](https://huggingface.co/inviolus/InviolusOCR). A half-width
+**tiny** variant (2026-11-02, 144,330 parameters, **171 KB** int8) reads 64.4%
+of held-out lines and 32.6% of TS-TR. See
+[2026-11-02](#2026-11-02-two-continuations-of-d-and-a-171-kb-tiny-model).
 See [Hardware integration status](#hardware-integration-status)
 below for exactly what's blocking integration and what's already decided.
 
@@ -690,7 +699,45 @@ the same rule.
 More charts: `docs/benchmark-1101-heldout-*.svg` and
 `docs/benchmark-1101-tstr_test-*.svg`. Results: `artifacts/night-2026-11-01/benchmark.json`.
 D's training data adds CC BY-SA 4.0 (already covered by the CC BY-NC-SA 4.0
-model licence). The Hugging Face model is still B.
+model licence). Hugging Face moved from B to D on 2026-11-02.
+
+### 2026-11-02: two continuations of D and a 171 KB tiny model
+
+- **E** continued D at `OCR_LR=4e-4`. The rate was too high: the first epoch
+  stayed the best one and early stopping ended the run after 11 epochs, about
+  2 hours into a 285-minute budget.
+- **F** continued D at `OCR_LR=1.5e-4` for 190 minutes with early stopping out
+  of the way (`OCR_PATIENCE=100`).
+- **tiny** is the same architecture at half width (`OCR_WIDTH=0.5`), trained
+  from scratch for 260 minutes on 4 threads. D builds on many earlier runs, so
+  part of the gap below is training time as well as size.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/benchmark-1102-size-dark.svg">
+  <img alt="Exact-line accuracy of the int8 files of D (598 KB) and tiny (171 KB) on three test sets" src="docs/benchmark-1102-size-light.svg">
+</picture>
+
+| Model | Params | int8 size | Held-out int8 | TS-TR int8 | Donut test int8 |
+|---|---:|---:|---:|---:|---:|
+| **D** | 560,954 | 598 KB | **77.3%** | **56.2%** | **46.5%** |
+| E | 560,954 | 598 KB | 77.1% | 56.0% | 45.9% |
+| F | 560,954 | 598 KB | 77.1% | 55.5% | 46.5% |
+| **tiny** | 144,330 | **171 KB** | 64.4% | 32.6% | 20.1% |
+
+- **More training did not help D.** E and F together added about five hours and
+  moved no int8 score up. F's float file gained on donut (50.0% to 51.4%), but
+  that did not reach int8. At this size, further gains need something other than
+  more of the same training.
+- **tiny trades accuracy for size.** It is 29% of D's file size. Its int8 file
+  misses 14.1% of characters on held-out lines (D: 10.0%) and 31.3% on TS-TR
+  (D: 18.8%). Whole-line scores fall further because one wrong character fails
+  the line.
+- **Published now:** D replaces B as the main Hugging Face model, because it
+  reads printed documents at a cost of 1 to 2 points elsewhere. tiny is
+  published next to it. E and F are not published.
+
+Results: `artifacts/night-2026-11-02/benchmark.json` (B, D, E),
+`benchmark_F.json`, `benchmark_T.json`.
 
 ## Hardware integration status
 
