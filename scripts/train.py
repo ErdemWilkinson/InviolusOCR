@@ -186,6 +186,24 @@ def build_models() -> tuple[tf.keras.Model, tf.keras.Model]:
     loss = tf.keras.layers.Lambda(ctc_loss, name="ctc_loss")(
         [logits, labels_input, input_length, label_length]
     )
+    teacher_path = os.environ.get("OCR_TEACHER")
+    if teacher_path:
+        # Distillation (PP-OCR DML/U-DML idea): a frozen, larger recognizer sees
+        # the same augmented image, and the student also matches its per-step
+        # character distribution (KL) on top of CTC.
+        source = tf.keras.models.load_model(teacher_path, compile=False)
+        teacher = tf.keras.Model(source.inputs, source.outputs, name="teacher")
+        teacher.trainable = False
+        teacher_probs = teacher(image_input, training=False)
+        kd_weight = float(os.environ.get("OCR_KD_WEIGHT", "1"))
+
+        def kd_loss(arguments: list[tf.Tensor]) -> tf.Tensor:
+            ctc, student, target = arguments
+            kl = tf.reduce_sum(target * (tf.math.log(target + 1e-7) - tf.math.log(student + 1e-7)), axis=[1, 2])
+            return ctc + kd_weight * kl[:, None]
+
+        loss = tf.keras.layers.Lambda(kd_loss, name="kd_loss")([loss, logits, teacher_probs])
+        print(f"Distillation from {teacher_path}, KL weight {kd_weight}")
     training_model = tf.keras.Model(
         [image_input, labels_input, input_length, label_length], loss
     )
