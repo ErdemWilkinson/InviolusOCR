@@ -1,0 +1,9 @@
+INFO internal_free=582891 spiram_total=33554432 spiram_free=33551280 cpu_mhz=360
+RESULT model=InviolusOCR_T_171KB mem=psram status=OK model_bytes=171112 arena_used=171840 input_bytes=5120 invoke_ms_mean=416.81 min=416.67 max=416.92 runs=20
+RESULT model=InviolusOCR_T_171KB mem=internal status=OK model_bytes=171112 arena_used=171836 input_bytes=5120 invoke_ms_mean=413.20 min=413.06 max=413.33 runs=20
+RESULT model=InviolusOCR_D_598KB mem=psram status=OK model_bytes=597816 arena_used=339008 input_bytes=5120 invoke_ms_mean=1387.14 min=1386.93 max=1387.69 runs=20
+RESULT model=InviolusOCR_D_598KB mem=internal status=OK model_bytes=597816 arena_used=339004 input_bytes=5120 invoke_ms_mean=1365.38 min=1365.13 max=1365.92 runs=20
+RESULT model=VoxHOD_v3_197KB mem=psram status=OK model_bytes=196776 arena_used=331808 input_bytes=76800 invoke_ms_mean=347.33 min=347.21 max=347.46 runs=20
+RESULT model=VoxHOD_v3_197KB mem=internal status=OK model_bytes=196776 arena_used=331804 input_bytes=76800 invoke_ms_mean=320.78 min=320.67 max=320.90 runs=20
+RESULT model=VoxHOD_nano_75KB mem=psram status=OK model_bytes=75376 arena_used=217600 input_bytes=76800 invoke_ms_mean=159.43 min=159.30 max=159.50 runs=20
+RESULT model=VoxHOD_nano_75KB mem=internal status=OK model_bytes=75376 arena_used=217596 input_bytes=76800 invoke_ms_mean=150.56 min=150.55 max=150.62 runs=20

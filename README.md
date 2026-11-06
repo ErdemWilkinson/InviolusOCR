@@ -739,6 +739,26 @@ model licence). Hugging Face moved from B to D on 2026-11-02.
 Results: `artifacts/night-2026-11-02/benchmark.json` (B, D, E),
 `benchmark_F.json`, `benchmark_T.json`.
 
+## On-device measurement (ESP32-P4)
+
+Measured on 2026-11-06 on one ESP32-P4 board (rev v1.3, 360 MHz, 32 MB flash, 32 MB PSRAM) with ESP-IDF 5.3.5 and `esp-tflite-micro` 1.4.2. Each row is the mean of 20 runs after 2 warm-up runs; the published files were measured byte for byte. One inference is one 160x32 grayscale line. The makeshift-flipper itself is an ESP32-C6; the P4 was a separate development board used only for this measurement.
+
+| Model | File | Arena used | Latency, arena in internal SRAM | Latency, arena in PSRAM (200 MHz) |
+|---|---:|---:|---:|---:|
+| InviolusOCR tiny | 171 KB | 172 KB | 413 ms | 417 ms |
+| InviolusOCR D | 598 KB | 339 KB | 1365 ms | 1387 ms |
+
+The weights stay in flash; the arena only holds the activations. Both models fit in internal SRAM.
+
+What this does and does not show:
+
+- Random int8 input: this is **speed and memory only**. The output was not compared with the PC
+  interpreter, so correctness on the device is unchecked.
+- Only the model inference is timed, not image decoding, resizing, CTC decoding.
+- It is an ESP32-P4, not an ESP32-S3. The numbers do not carry over to the S3, which has other cores.
+- Whether ESP-NN's accelerated kernels are active for the P4 was not checked, so the speed may improve.
+- One board. Source and raw output: [benchmarks/esp32-p4](https://github.com/ErdemWilkinson/InviolusOCR/tree/master/benchmarks/esp32-p4).
+
 ## Hardware integration status
 
 This pipeline was deliberately built **before** committing to firmware
