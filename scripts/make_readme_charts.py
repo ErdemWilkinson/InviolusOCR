@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from svgkit import esc, fmt, dumbbell, grouped_bars, header, write  # noqa: E402
+from svgkit import channel_bars, esc, fmt, dumbbell, grouped_bars, header, roadmap, write  # noqa: E402
 
 DOCS = Path(__file__).resolve().parents[1] / "docs"
 
@@ -31,6 +31,28 @@ VERSIONS = [
     ("P, 11-07", 298, "conv", 72.8, 71.8),
     ("P2, 11-07", 298, "conv", 73.3, 72.3),
 ]
+
+# Importance of D's 128 shared sequence channels (normalised Dense L1 norm + sum of normalised
+# BatchNorm |gamma| of the 4 Conv1D blocks), sorted; scripts/prune.py keeps the top 89 (width 0.7).
+SEQ_SCORES = [6.53, 6.36, 6.06, 5.99, 5.95, 5.85, 5.84, 5.73, 5.69, 5.67, 5.62, 5.61, 5.56, 5.55, 5.52, 5.51, 5.47, 5.43, 5.42, 5.4, 5.39, 5.38, 5.35, 5.34, 5.33, 5.33, 5.32, 5.32, 5.3, 5.3, 5.29, 5.26, 5.24, 5.23, 5.2, 5.2, 5.19, 5.18, 5.18, 5.14, 5.14, 5.12, 5.11, 5.11, 5.1, 5.09, 5.09, 5.09, 5.06, 5.05, 5.04, 5.03, 5.03, 5.02, 5.02, 5.02, 5.02, 4.99, 4.98, 4.98, 4.98, 4.97, 4.97, 4.93, 4.91, 4.91, 4.91, 4.9, 4.9, 4.89, 4.87, 4.86, 4.86, 4.86, 4.85, 4.85, 4.85, 4.84, 4.84, 4.84, 4.83, 4.83, 4.82, 4.82, 4.81, 4.8, 4.8, 4.78, 4.76, 4.76, 4.75, 4.73, 4.72, 4.71, 4.7, 4.7, 4.7, 4.69, 4.68, 4.65, 4.65, 4.64, 4.64, 4.63, 4.62, 4.6, 4.59, 4.59, 4.57, 4.57, 4.57, 4.55, 4.55, 4.54, 4.54, 4.53, 4.53, 4.5, 4.48, 4.47, 4.42, 4.41, 4.36, 4.36, 4.35, 4.26, 4.16, 4.13]
+
+ROADMAP_COLUMNS = ["Next", "This week", "Later"]
+ROADMAP = [
+    ("OCR", [[("Train P and S longer on the GPU", "Gate: P beats S by ≥ 2 points on TS-TR", True)],
+             [("Prune D to tiny's size (171 KB)", "Gate: held-out > 64.4%, TS-TR > 32.6%", False),
+              ("Quantization-aware training for the pruned model", "Gate: int8 loses ≤ 2 points on every set", False)],
+             [("Publish a 298 KB model", "Gate: the gates before it, plus an ESP32-P4 measurement", False)]]),
+    ("VoxHOD", [[("Train with many more empty and hard-negative tiles", "Gate: precision > 20.4% at recall ≥ 83%", True)],
+                [("Find small people more often", "Gate: ≥ 85% of 8-16 px people, same size", False)],
+                [("More varied aerial data", "Gate: WiSARD recall > 61.3% without losing HERIDAL", False)]]),
+    ("ASR", [[("Continue v11 on the GPU", "Gate: CER below 40% on both test sets", True)],
+             [("Wide teacher, 64k-parameter student", "Gate: the student beats v11 at the same size", False)],
+             [("Record the command dataset", "Gate: the command-classifier acceptance threshold", False)]]),
+    ("Infra", [[("GPU training in WSL2", "Done 2026-11-07: 155 s per epoch instead of about 50 min", False)],
+               [("Feed the GPU faster", "Gate: epoch below 100 s (GPU is ~30% busy)", False)],
+               [("Check device output against the PC", "Gate: same results on device and PC", False)]]),
+]
+
 D, P2, TINY, P, S = 0, 1, 3, 1, 2  # colour slots follow the model: D blue, P/P2 orange, S aqua, tiny yellow
 
 
@@ -192,6 +214,12 @@ def main() -> None:
                  "Same architecture (298 KB), same data, same 8 epochs; only the starting weights differ. int8 exact-line accuracy.",
                  ["Held-out lines", "TS-TR scene text", "Printed documents, donut"],
                  [("P · pruned from D", P, [71.8, 44.5, 31.7]), ("S · from scratch", S, [65.3, 34.4, 20.6])])
+    channel_bars(DOCS / "ocr-pruning-channels", "Which connections pruning cut",
+                 "D's 128 sequence channels sorted by importance (BatchNorm |gamma| + weight norm). The pruned model keeps the top 89.",
+                 SEQ_SCORES, keep=89)
+    roadmap(DOCS / "roadmap", "Roadmap for all three models",
+            "Rule: the device model never grows; larger models are only teachers. A step ships only if it passes its gate.",
+            ROADMAP_COLUMNS, ROADMAP)
     print("charts written to", DOCS)
 
 

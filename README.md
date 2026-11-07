@@ -136,6 +136,15 @@ control.
   their channels are chosen together. Right after the cut the model reads
   0.1% of TS-TR lines, so the fine-tuning does the work, not the cut alone.
 - **S:** the same architecture from random weights.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-pruning-channels-dark.svg">
+  <img alt="Importance scores of D's 128 sequence channels, sorted; the top 89 are kept and 39 are cut" src="docs/ocr-pruning-channels-light.svg">
+</picture>
+
+The scores are close together (6.5 at the top, 4.1 at the bottom): D had no idle channels,
+every one did some work. That is why the model fails right after the cut and needs fine-tuning.
+
 - Both: the same data and validation rows as D, learning rate 1e-3 with
   cosine decay, augmentation, 7 hours each on a CPU. That was only 8 epochs.
 
@@ -156,6 +165,11 @@ control.
 Results: `artifacts/prune-2026-11-07/benchmark_*.json`.
 
 ## Roadmap
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/roadmap-dark.svg">
+  <img alt="Roadmap for InviolusOCR, VoxHOD and the ASR baseline: next steps, this week and later, each with its gate" src="docs/roadmap-light.svg">
+</picture>
 
 Rule for every step: **the device model does not grow.** 598 KB is the
 largest file; larger models are only allowed as teachers during training.
