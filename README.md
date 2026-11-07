@@ -167,8 +167,8 @@ Results: `artifacts/prune-2026-11-07/benchmark_*.json`.
 ## Roadmap
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/roadmap-dark.svg">
-  <img alt="Roadmap for InviolusOCR, VoxHOD and the ASR baseline: next steps, this week and later, each with its gate" src="docs/roadmap-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/roadmap-ocr-dark.svg">
+  <img alt="InviolusOCR roadmap: next steps, this week and later, each with its gate" src="docs/roadmap-ocr-light.svg">
 </picture>
 
 Rule for every step: **the device model does not grow.** 598 KB is the

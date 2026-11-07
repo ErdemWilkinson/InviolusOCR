@@ -41,16 +41,9 @@ ROADMAP = [
     ("OCR", [[("Train P and S longer on the GPU", "Gate: P beats S by ≥ 2 points on TS-TR", True)],
              [("Prune D to tiny's size (171 KB)", "Gate: held-out > 64.4%, TS-TR > 32.6%", False),
               ("Quantization-aware training for the pruned model", "Gate: int8 loses ≤ 2 points on every set", False)],
-             [("Publish a 298 KB model", "Gate: the gates before it, plus an ESP32-P4 measurement", False)]]),
-    ("VoxHOD", [[("Train with many more empty and hard-negative tiles", "Gate: precision > 20.4% at recall ≥ 83%", True)],
-                [("Find small people more often", "Gate: ≥ 85% of 8-16 px people, same size", False)],
-                [("More varied aerial data", "Gate: WiSARD recall > 61.3% without losing HERIDAL", False)]]),
-    ("ASR", [[("Continue v11 on the GPU", "Gate: CER below 40% on both test sets", True)],
-             [("Wide teacher, 64k-parameter student", "Gate: the student beats v11 at the same size", False)],
-             [("Record the command dataset", "Gate: the command-classifier acceptance threshold", False)]]),
-    ("Infra", [[("GPU training in WSL2", "Done 2026-11-07: 155 s per epoch instead of about 50 min", False)],
-               [("Feed the GPU faster", "Gate: epoch below 100 s (GPU is ~30% busy)", False)],
-               [("Check device output against the PC", "Gate: same results on device and PC", False)]]),
+             [("Publish a 298 KB model", "Gate: the gates before it, plus an ESP32-P4 measurement", False),
+              ("Feed the GPU faster", "Gate: epoch below 100 s (now 155 s)", False),
+              ("More real scene-text data", "Gate: licence allows it; no orkungedik data", False)]]),
 ]
 
 D, P2, TINY, P, S = 0, 1, 3, 1, 2  # colour slots follow the model: D blue, P/P2 orange, S aqua, tiny yellow
@@ -217,7 +210,7 @@ def main() -> None:
     channel_bars(DOCS / "ocr-pruning-channels", "Which connections pruning cut",
                  "D's 128 sequence channels sorted by importance (BatchNorm |gamma| + weight norm). The pruned model keeps the top 89.",
                  SEQ_SCORES, keep=89)
-    roadmap(DOCS / "roadmap", "Roadmap for all three models",
+    roadmap(DOCS / "roadmap-ocr", "InviolusOCR roadmap",
             "Rule: the device model never grows; larger models are only teachers. A step ships only if it passes its gate.",
             ROADMAP_COLUMNS, ROADMAP)
     print("charts written to", DOCS)
