@@ -28,6 +28,9 @@ cost of 1 to 2 points on the other sets. See
 **tiny** variant (2026-11-02, 144,330 parameters, **171 KB** int8) reads 64.4%
 of held-out lines and 32.6% of TS-TR. See
 [2026-11-02](#2026-11-02-two-continuations-of-d-and-a-171-kb-tiny-model).
+D pruned to half its size (2026-11-07, 298 KB, not yet published) reads 71.8%
+and 44.5%, well ahead of the same model trained from scratch. See
+[2026-11-07](#2026-11-07-pruning-d-to-298-kb-against-the-same-model-trained-from-scratch).
 See [Hardware integration status](#hardware-integration-status)
 below for exactly what's blocking integration and what's already decided.
 
@@ -738,6 +741,47 @@ model licence). Hugging Face moved from B to D on 2026-11-02.
 
 Results: `artifacts/night-2026-11-02/benchmark.json` (B, D, E),
 `benchmark_F.json`, `benchmark_T.json`.
+
+### 2026-11-07: pruning D to 298 KB, against the same model trained from scratch
+
+Does cutting channels out of a trained model give a better small model than
+training that small model from scratch? Liu et al. (2019, "Rethinking the
+Value of Network Pruning") found that often it does not, so this run has a
+control.
+
+- **P (pruned):** `scripts/prune.py` builds the `OCR_WIDTH=0.7` model
+  (274,450 parameters, 49% of D) and fills it with D's channels that have the
+  largest BatchNorm |gamma| (the Network Slimming rule). The four residual
+  Conv1D blocks share one channel stream, so their channels are chosen
+  together. Before any training the pruned model reads 0.1% of TS-TR lines
+  (D: 58.2% float), so the fine-tuning does the work, not the cut alone.
+- **S (scratch):** the same architecture from random weights.
+- Both: the same data and validation split as D, `OCR_LR=1e-3` cosine,
+  augmentation, 7 hours each, side by side on 3 threads each. That is only
+  8 epochs per model (46 to 59 minutes per epoch).
+
+| Model | Params | int8 size | Held-out int8 | TS-TR int8 | Donut test int8 |
+|---|---:|---:|---:|---:|---:|
+| D | 560,954 | 598 KB | **77.3%** | **56.2%** | **46.5%** |
+| **P, pruned from D** | 274,450 | 298 KB | **71.8%** | **44.5%** | **31.7%** |
+| S, from scratch | 274,450 | 298 KB | 65.3% | 34.4% | 20.6% |
+| tiny | 144,330 | 171 KB | 64.4% | 32.6% | 20.1% |
+
+- **Pruning won clearly at this budget.** P is ahead of S by 6.5 points on
+  held-out lines, 10.1 on TS-TR and 11.1 on donut. The test noise is about
+  ±0.9 (held-out) and ±2.0 (TS-TR) points at 95%, so the gap is real.
+- **But both runs were short.** S was still improving faster at the end
+  (validation loss 8.77 to 8.60 in the last epoch, P 7.13 to 7.07). With
+  a longer budget the gap may shrink, as Liu et al. report. What this shows is
+  that pruning gives a much better model for the same short training time.
+- **P is a new point on the size curve.** Half of D's file size, it keeps 93%
+  of D's held-out score and 79% of its TS-TR score, and it is ahead of tiny
+  everywhere at 1.7 times tiny's size. Its int8 file loses 1 point on held-out
+  lines, 3 on TS-TR and 5.4 on donut against its float file.
+- **Not published yet.** P should first train longer; S is not worth keeping.
+
+Results: `artifacts/prune-2026-11-07/benchmark_P.json`, `benchmark_S.json`,
+`benchmark_P_donut.json`, `benchmark_S_donut.json`.
 
 ## On-device measurement (ESP32-P4)
 
