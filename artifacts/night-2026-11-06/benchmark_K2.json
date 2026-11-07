@@ -1,0 +1,46 @@
+{
+  "K2_kd": {
+    "params": 144330,
+    "tflite_bytes": 171112,
+    "tstr_test/float": {
+      "samples": 2078,
+      "exact": 0.33589990375360923,
+      "cer": 0.3147037067477603
+    },
+    "tstr_test/int8": {
+      "samples": 2078,
+      "exact": 0.32675649663137635,
+      "cer": 0.31412838004438237
+    },
+    "heldout/float": {
+      "samples": 12093,
+      "exact": 0.6512858678574381,
+      "cer": 0.13789429688332336
+    },
+    "heldout/int8": {
+      "samples": 12093,
+      "exact": 0.6363185313817911,
+      "cer": 0.14409814704026355
+    },
+    "plates/float": {
+      "samples": 250,
+      "exact": 0.02,
+      "cer": 0.5564005069708492
+    },
+    "plates_nospace/float": {
+      "samples": 250,
+      "exact": 0.052,
+      "cer": 0.5037473233404711
+    },
+    "plates/int8": {
+      "samples": 250,
+      "exact": 0.008,
+      "cer": 0.5538656527249683
+    },
+    "plates_nospace/int8": {
+      "samples": 250,
+      "exact": 0.036,
+      "cer": 0.515524625267666
+    }
+  }
+}
