@@ -1,10 +1,9 @@
 # InviolusOCR: tiny Turkish OCR for microcontrollers
 
 **Türkçe:** Mikrodenetleyiciler için küçük Türkçe OCR modeli. Tek satır basılı
-Türkçe metni okur. Yayındaki int8 TensorFlow Lite dosyası 598 KB, küçük sürümü
-171 KB. Budanarak elde edilen iki aday var: 298 KB'lık P2 ve 171 KB'lık Pt.
-Pt, aynı boyuttaki tiny'yi üç testte de geçiyor; henüz yayımlanmadı. Grafikler,
-sürüm geçmişi ve yol haritası aşağıda.
+Türkçe metni okur. Üç boyutta yayında: Base (598 KB), Small (298 KB) ve Nano
+(171 KB). Small ve Nano, Base'den kanal budanarak elde edildi; Nano, eski 171
+KB'lık tiny'nin yerini aldı. Grafikler, sürüm geçmişi ve yol haritası aşağıda.
 
 *Keywords: Turkish OCR, Türkçe OCR, tiny OCR, text recognition, CTC, TFLite,
 int8, TinyML, ESP32, microcontroller.*
@@ -21,12 +20,16 @@ dataset.
 real input are measured on an ESP32-P4 board. It is not integrated into any
 firmware yet.
 
-| Model | Params | int8 file | Held-out | TS-TR | Donut | Where |
-|---|---:|---:|---:|---:|---:|---|
-| **D** | 560,954 | 598 KB | **77.3%** | **56.2%** | **46.5%** | [Hugging Face](https://huggingface.co/inviolus/InviolusOCR) (main) |
-| P2, pruned from D | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | candidate, not published |
-| Pt, P2 pruned to half width | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | candidate, not published |
-| **tiny** | 144,330 | 171 KB | 64.4% | 32.6% | 20.1% | [Hugging Face](https://huggingface.co/inviolus/InviolusOCR) |
+| Model | Params | int8 file | Held-out | TS-TR | Donut | ESP32-P4, one line |
+|---|---:|---:|---:|---:|---:|---:|
+| **InviolusOCR-Base** | 560,954 | 598 KB | **77.3%** | **56.2%** | **46.5%** | 1404 ms |
+| **InviolusOCR-Small** | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | 760 ms |
+| **InviolusOCR-Nano** | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | about 420 ms |
+
+All three are on [Hugging Face](https://huggingface.co/inviolus/InviolusOCR)
+since 2026-11-08 (int8 `.tflite` for devices, float `.h5`). Nano replaced the
+earlier 171 KB `tiny` (64.4% / 32.6% / 20.1%), which it beats on all three
+test sets. **Run names used below:** D = Base, P2 = Small, Pt = Nano.
 
 Scores are the share of lines read exactly right by the int8 file. See
 [Where the model stands](#where-the-model-stands) for the test sets,
@@ -113,16 +116,16 @@ confusion; they are in the git history up to commit `d210a8b`.
 | LSTM | 2026-10-25 | 35 more epochs | 631,226 | 665 KB | 32.1% | 48.7% | 6.7% | never published (same reason) |
 | A, LSTM | 2026-10-31 | from 10-09 weights, orkungedik removed | 631,226 | 665 KB | 48.2% | 41.6% | n/m | replaced by B |
 | B, conv | 2026-10-31 | conv sequence head instead of LSTM | 560,954 | 598 KB | 78.4% | 58.2% | 9.3% | replaced by D |
-| **D, conv** | 2026-11-01 | B + 47,613 donut document lines | 560,954 | 598 KB | 77.3% | 56.2% | 46.5% | **on Hugging Face (main)** |
+| **D, conv** | 2026-11-01 | B + 47,613 donut document lines | 560,954 | 598 KB | 77.3% | 56.2% | 46.5% | **on Hugging Face as Base** |
 | E, F | 2026-11-02 | D trained 5 more hours | 560,954 | 598 KB | 77.1% | 55.5–56.0% | 45.9–46.5% | dead end |
-| **tiny** | 2026-11-02 | half width, from scratch | 144,330 | 171 KB | 64.4% | 32.6% | 20.1% | **on Hugging Face** |
+| tiny | 2026-11-02 | half width, from scratch | 144,330 | 171 KB | 64.4% | 32.6% | 20.1% | was on Hugging Face, replaced by Nano |
 | K, K2 | 2026-11-04/06 | tiny distilled from D as teacher | 144,330 | 171 KB | 62.4–63.6% | 31.4–32.7% | n/m | dead end |
 | P | 2026-11-07 | D pruned to 70% width, 8 epochs | 274,450 | 298 KB | 71.8% | 44.5% | 31.7% | replaced by P2 |
 | S | 2026-11-07 | P's architecture from scratch (control) | 274,450 | 298 KB | 65.3% | 34.4% | 20.6% | control only |
-| **P2** | 2026-11-07 | P + 5 epochs on a GPU | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | **candidate** |
+| **P2** | 2026-11-07 | P + 5 epochs on a GPU | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | **on Hugging Face as Small** |
 | P3 | 2026-11-08 | D pruned to 70% width again, 1 GPU hour (~23 epochs) | 274,450 | 298 KB | 72.6% | 45.3% | 34.2% | same level as P2 |
 | S3 | 2026-11-08 | P3's architecture from scratch, 1 GPU hour (control) | 274,450 | 298 KB | 70.3% | 42.4% | 29.5% | control only |
-| **Pt** | 2026-11-08 | P2 pruned to 50% width, 1 GPU hour | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | **candidate to replace tiny** |
+| **Pt** | 2026-11-08 | P2 pruned to 50% width, 1 GPU hour | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | **on Hugging Face as Nano** |
 | St | 2026-11-08 | Pt's architecture from scratch, 1 GPU hour (control) | 144,330 | 171 KB | 63.9% | 32.3% | 17.4% | control only |
 
 n/m: not measured.
@@ -225,7 +228,8 @@ A step ships only if it passes its gate.
 |---|---|---|---|
 | Train pruned and scratch models longer on the GPU | Does pruning still win with a long budget? | Pruned ahead by ≥ 2 points on TS-TR | **passed** 2026-11-08: +2.9 (P3 vs S3, p < 0.001) |
 | Prune to tiny's size (width 0.5) | The current tiny was trained from scratch | At 171 KB: held-out > 64.4% and TS-TR > 32.6% | **passed** 2026-11-08: Pt 65.4% / 34.6%, paired test p ≤ 0.016 |
-| Publish Pt in place of tiny, and a 298 KB model | Better at the same size; fill the gap between tiny and D | The gates above, plus the ESP32-P4 check | **ready**, waiting for the owner's approval |
+| Publish Pt in place of tiny, and a 298 KB model | Better at the same size; fill the gap between tiny and D | The gates above, plus the ESP32-P4 check | **done** 2026-11-08: published as Nano and Small |
+| Measure Nano byte for byte on the ESP32-P4 | Its speed is taken from the earlier tiny (same architecture) | Same speed as tiny, accuracy within the noise of the PC | open |
 | Quantization-aware training for the pruned model | P2 loses 4.1 points on donut when converted to int8 | float-to-int8 loss ≤ 2 points on every set | **blocked:** TF-MOT cannot quantize the BatchNorm after Conv1D; needs BN folding or a custom QuantizeConfig |
 | Feed the GPU faster | The GPU is only about 30% busy | Epoch time below 100 s (now 155-180 s) | open; uint8 images inside tf.data did not help (180 s), so the input is not the bottleneck |
 | More real scene-text data | TS-TR is the weakest set | The licence allows it; no orkungedik data | open |
@@ -451,9 +455,9 @@ Measured on one ESP32-P4 board (rev v1.3, 360 MHz, 32 MB flash, 32 MB PSRAM) wit
 
 | Model | File | Arena used | Latency, internal SRAM | Latency, PSRAM (200 MHz) | Exact lines, PC | Exact lines, device |
 |---|---:|---:|---:|---:|---:|---:|
-| InviolusOCR tiny (Pt has the same architecture) | 171 KB | 172 KB | 419 ms | 423 ms | 33.8% | 35.0% |
-| InviolusOCR P2 (candidate) | 298 KB | 235 KB | **760 ms** | 766 ms | 47.5% | 45.8% |
-| InviolusOCR D | 598 KB | 339 KB | 1404 ms | 1425 ms | 56.7% | 55.4% |
+| InviolusOCR tiny (Nano has the same architecture) | 171 KB | 172 KB | 419 ms | 423 ms | 33.8% | 35.0% |
+| InviolusOCR-Small (P2) | 298 KB | 235 KB | **760 ms** | 766 ms | 47.5% | 45.8% |
+| InviolusOCR-Base (D) | 598 KB | 339 KB | 1404 ms | 1425 ms | 56.7% | 55.4% |
 
 The weights stay in flash; the arena only holds the activations. All three fit in internal SRAM. P2 meets the 1 s per line target; D does not.
 

@@ -14,8 +14,8 @@ ESP-IDF 5.3.5, `esp-tflite-micro` 1.4.2.
 | Model | File | Arena | Latency, internal SRAM | Exact lines, PC | Exact lines, device | Same text on both |
 |---|---:|---:|---:|---:|---:|---:|
 | tiny | 171 KB | 172 KB | 419 ms | 81 / 240 (33.8%) | 84 / 240 (35.0%) | 180 / 240 |
-| P2 (pruned, candidate) | 298 KB | 235 KB | 760 ms | 114 / 240 (47.5%) | 110 / 240 (45.8%) | 201 / 240 |
-| D | 598 KB | 339 KB | 1404 ms | 136 / 240 (56.7%) | 133 / 240 (55.4%) | 202 / 240 |
+| Small (P2) | 298 KB | 235 KB | 760 ms | 114 / 240 (47.5%) | 110 / 240 (45.8%) | 201 / 240 |
+| Base (D) | 598 KB | 339 KB | 1404 ms | 136 / 240 (56.7%) | 133 / 240 (55.4%) | 202 / 240 |
 
 What this shows:
 

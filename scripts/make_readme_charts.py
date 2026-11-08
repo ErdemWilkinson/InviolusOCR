@@ -40,12 +40,11 @@ SEQ_SCORES = [6.53, 6.36, 6.06, 5.99, 5.95, 5.85, 5.84, 5.73, 5.69, 5.67, 5.62, 
 
 ROADMAP_COLUMNS = ["Next", "This week", "Later"]
 ROADMAP = [
-    ("OCR", [[("Publish Pt (171 KB) in place of tiny", "Passed: beats tiny on all three sets (paired test, p ≤ 0.016); waits for the owner's approval", True),
-              ("Publish a 298 KB model (P2 or P3)", "Passed: beats its from-scratch control; 760 ms on the ESP32-P4, under 1 s", True)],
-             [("Quantization-aware training", "Blocked: TF-MOT cannot quantize BatchNorm after Conv1D; fold it or write a custom QuantizeConfig", False),
-              ("Longer pruned runs (2-3 h)", "Gate: still ahead of the same-budget scratch run", False)],
-             [("Feed the GPU faster", "Gate: epoch below 100 s (now 155-180 s)", False),
-              ("More real scene-text data", "Gate: licence allows it; no orkungedik data", False)]]),
+    ("OCR", [[("Fold BatchNorm into the convolutions so QAT works", "Gate: int8 loses ≤ 2 points on every set (Small now loses up to 4.1)", True),
+              ("Measure Nano byte for byte on the ESP32-P4", "Gate: same speed as the earlier tiny, accuracy within the noise of PC", False)],
+             [("Longer pruned runs (2-3 h)", "Gate: still ahead of the same-budget scratch run", False),
+              ("Feed the GPU faster", "Gate: epoch below 100 s (now 155-180 s)", False)],
+             [("More real scene-text data", "Gate: licence allows it; no orkungedik data", False)]]),
 ]
 
 D, P2, TINY, P, PT, CTRL = 0, 1, 3, 1, 2, 4  # colour slots follow the model: D blue, P/P2/P3 orange, Pt aqua, tiny yellow, control runs grey
@@ -61,14 +60,14 @@ def lineage() -> None:
         "v1025": (2, rows["lstm"], "Oct 25", "LSTM · 665 KB", 32.1, "old"),
         "A": (3, rows["lstm"], "A", "LSTM · 665 KB", 48.2, "old"),
         "B": (3, rows["conv"], "B", "conv · 598 KB", 78.4, "old"),
-        "D": (4, rows["conv"], "D", "conv · 598 KB", 77.3, "pub"),
+        "D": (4, rows["conv"], "Base", "D · 598 KB", 77.3, "pub"),
         "EF": (5, rows["conv"], "E, F", "598 KB", 77.1, "dead"),
         "P": (7, rows["prune"], "P", "pruned · 298 KB", 71.8, "old"),
         "S": (7, rows["prune"] + 0, "S", "", 65.3, "skip"),
-        "P2": (8, rows["prune"], "P2", "298 KB", 72.3, "now"),
-        "T": (5, rows["tiny"], "tiny", "171 KB", 64.4, "pub"),
+        "P2": (8, rows["prune"], "Small", "P2 · 298 KB", 72.3, "pub"),
+        "T": (5, rows["tiny"], "tiny", "replaced · 171 KB", 64.4, "old"),
         "K": (6, rows["tiny"], "K, K2", "distilled · 171 KB", 63.6, "dead"),
-        "Pt": (8, rows["tiny"], "Pt", "171 KB", 65.4, "now"),
+        "Pt": (8, rows["tiny"], "Nano", "Pt · 171 KB", 65.4, "pub"),
     }
     del nodes["S"]  # S is the control run; it is shown in the pruning chart instead
 
@@ -79,8 +78,8 @@ def lineage() -> None:
 
     def body(t: dict) -> str:
         out = [header(t, "How the model got here", "Each box: one version, its int8 held-out exact-line accuracy (%). Arrows: what changed.",
-                      [("on Hugging Face", D), ("candidate, not published", P2)])]
-        lx = 20 + 34 + 6.6 * len("on Hugging Face") + 34 + 6.6 * len("candidate, not published")
+                      [("on Hugging Face: Base, Small, Nano", D)])]
+        lx = 20 + 34 + 6.6 * len("on Hugging Face: Base, Small, Nano")
         out.append(f'<rect x="{lx:.0f}" y="62" width="12" height="12" rx="3" fill="{t["surface"]}" stroke="{t["muted"]}" stroke-dasharray="3 2"/>'
                    f'<text x="{lx + 18:.0f}" y="72" font-size="12" fill="{t["text"]}">dead end</text>')
         out.append(f'<defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">'
@@ -157,10 +156,10 @@ def frontier() -> None:
 
     points = [  # label, KB, held-out int8, kind, label dx, dy, anchor (drawn in this order)
         ("B 78.4", 598, 78.4, "B", -10, -8, "end"),
-        ("Pt 65.4 (pruned, candidate)", 171, 65.4, "Pt", 10, 18, "start"),
-        ("tiny 64.4 (published)", 171, 64.4, "tiny", 10, 34, "start"),
-        ("P2 72.3 (pruned D)", 298, 72.3, "P2", 10, -8, "start"),
-        ("D 77.3 (published)", 598, 77.3, "D", -10, 18, "end"),
+        ("Nano 65.4", 171, 65.4, "Pt", 10, 18, "start"),
+        ("tiny 64.4 (replaced by Nano)", 171, 64.4, "tiny", 10, 34, "start"),
+        ("Small 72.3", 298, 72.3, "P2", 10, -8, "start"),
+        ("Base 77.3", 598, 77.3, "D", -10, 18, "end"),
         ("Oct 10, 39.5", 665, 39.5, "lstm", -10, 4, "end"),
         ("A, 48.2", 665, 48.2, "lstm", -10, 4, "end"),
         ("Oct 9 and Oct 25, ~32", 665, 32.5, "lstm", -10, 4, "end"),
@@ -170,7 +169,7 @@ def frontier() -> None:
     def body(t: dict) -> str:
         out = [header(t, "Size against accuracy: the frontier moved left and up",
                       "int8 file size and held-out exact-line accuracy of every measured version.",
-                      [("D", D), ("P2", P2), ("Pt", PT), ("tiny", TINY), ("LSTM versions (Oct)", "hollow")])]
+                      [("Base", D), ("Small", P2), ("Nano", PT), ("tiny (replaced)", TINY), ("LSTM versions (Oct)", "hollow")])]
         for v in (0, 25, 50, 75, 100):
             out.append(f'<line x1="{left}" x2="{width - right}" y1="{sy(v):.1f}" y2="{sy(v):.1f}" stroke="{t["grid" if v else "axis"]}"/>'
                        f'<text x="{left - 8}" y="{sy(v) + 4:.1f}" font-size="11" text-anchor="end" fill="{t["muted"]}">{v}%</text>')
@@ -206,18 +205,18 @@ def main() -> None:
              [{"label": n, "a": f, "b": q, "highlight": arch == "LSTM"} for n, kb, arch, f, q in VERSIONS],
              divider_before=4, divider_label="conv sequence head from here on")
     grouped_bars(DOCS / "ocr-models", "Current models, int8 device files",
-                 "Exact-line accuracy. D and tiny are on Hugging Face; P2 and Pt (pruned) are candidates, not yet published.",
+                 "Exact-line accuracy. Base, Small and Nano are on Hugging Face; Nano replaces the earlier tiny (same size).",
                  ["Held-out lines (12,093)", "TS-TR scene text (2,078)", "Printed documents, donut (2,563)"],
-                 [("D · 598 KB", D, [77.3, 56.2, 46.5]), ("P2 · 298 KB", P2, [72.3, 46.0, 33.2]),
-                  ("Pt · 171 KB", PT, [65.4, 34.6, 21.9]), ("tiny · 171 KB", TINY, [64.4, 32.6, 20.1])])
+                 [("Base · 598 KB", D, [77.3, 56.2, 46.5]), ("Small · 298 KB", P2, [72.3, 46.0, 33.2]),
+                  ("Nano · 171 KB", PT, [65.4, 34.6, 21.9]), ("tiny (replaced) · 171 KB", TINY, [64.4, 32.6, 20.1])])
     grouped_bars(DOCS / "ocr-prune-vs-scratch", "Pruned D against the same model trained from scratch (298 KB)",
                  "int8 exact-line accuracy. Short run: 8 epochs on the CPU. Long run: 1 hour (~23 epochs) on the GPU. Same data and settings.",
                  ["Held-out, 8 epochs", "Held-out, 23 epochs", "TS-TR, 8 epochs", "TS-TR, 23 epochs"],
                  [("pruned from D (P, P3)", P, [71.8, 72.6, 44.5, 45.3]), ("from scratch, control (S, S3)", CTRL, [65.3, 70.3, 34.4, 42.4])])
     grouped_bars(DOCS / "ocr-prune-tiny", "At 171 KB: pruned model against the current tiny and a scratch control",
-                 "int8 exact-line accuracy. Pt: P2 pruned to half width, 1 GPU hour. St: same architecture from scratch, 1 GPU hour.",
+                 "int8 exact-line accuracy. Nano (Pt): Small pruned to half width, 1 GPU hour. St: same architecture from scratch, 1 GPU hour.",
                  ["Held-out lines (12,093)", "TS-TR scene text (2,078)", "Printed documents, donut (2,563)"],
-                 [("Pt · pruned", PT, [65.4, 34.6, 21.9]), ("tiny · published", TINY, [64.4, 32.6, 20.1]),
+                 [("Nano (Pt) · pruned", PT, [65.4, 34.6, 21.9]), ("tiny · replaced", TINY, [64.4, 32.6, 20.1]),
                   ("St · scratch control", CTRL, [63.9, 32.3, 17.4])])
     channel_bars(DOCS / "ocr-pruning-channels", "Which connections pruning cut",
                  "D's 128 sequence channels sorted by importance (BatchNorm |gamma| + weight norm). The pruned model keeps the top 89.",
