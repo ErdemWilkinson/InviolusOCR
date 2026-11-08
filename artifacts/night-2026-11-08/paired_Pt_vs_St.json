@@ -1,0 +1,28 @@
+{
+  "a": "artifacts_Pt_1108",
+  "b": "artifacts_St_1108",
+  "tstr_test": {
+    "rows": 2078,
+    "exact_a": 0.34648700673724736,
+    "exact_b": 0.3233878729547642,
+    "only_a_right": 161,
+    "only_b_right": 113,
+    "mcnemar_p": 0.004433671963048428
+  },
+  "heldout": {
+    "rows": 12093,
+    "exact_a": 0.6535185644587778,
+    "exact_b": 0.6385512279831307,
+    "only_a_right": 685,
+    "only_b_right": 504,
+    "mcnemar_p": 1.696775789604411e-07
+  },
+  "donut_test": {
+    "rows": 2563,
+    "exact_a": 0.21888412017167383,
+    "exact_b": 0.1740148263753414,
+    "only_a_right": 218,
+    "only_b_right": 103,
+    "mcnemar_p": 1.2655153841634835e-10
+  }
+}

@@ -1,0 +1,8 @@
+INFO internal_free=582167 spiram_total=33554432 spiram_free=33551280 cpu_mhz=360
+RESULT model=tiny mem=psram status=OK model_bytes=171112 arena_used=171840 input_bytes=5120 invoke_ms_mean=422.96 min=422.89 max=423.07 runs=20
+RESULT model=tiny mem=internal status=OK model_bytes=171112 arena_used=171836 input_bytes=5120 invoke_ms_mean=419.32 min=419.21 max=419.45 runs=20
+RESULT model=D mem=psram status=OK model_bytes=597816 arena_used=339008 input_bytes=5120 invoke_ms_mean=1425.11 min=1424.75 max=1425.69 runs=20
+RESULT model=D mem=internal status=OK model_bytes=597816 arena_used=339004 input_bytes=5120 invoke_ms_mean=1403.85 min=1403.46 max=1404.57 runs=20
+RESULT model=P2 mem=psram status=OK model_bytes=305200 arena_used=234720 input_bytes=5120 invoke_ms_mean=766.45 min=766.31 max=766.65 runs=20
+RESULT model=P2 mem=internal status=OK model_bytes=305200 arena_used=234716 input_bytes=5120 invoke_ms_mean=760.50 min=760.38 max=760.65 runs=20
+DONE

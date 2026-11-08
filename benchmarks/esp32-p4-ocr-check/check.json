@@ -1,0 +1,24 @@
+{
+ "lines": 240,
+ "tiny": {
+  "same_text": 180,
+  "pc_exact": 81,
+  "device_exact": 84,
+  "pc_right_device_wrong": 1,
+  "pc_wrong_device_right": 4
+ },
+ "D": {
+  "same_text": 202,
+  "pc_exact": 136,
+  "device_exact": 133,
+  "pc_right_device_wrong": 4,
+  "pc_wrong_device_right": 1
+ },
+ "P2": {
+  "same_text": 201,
+  "pc_exact": 114,
+  "device_exact": 110,
+  "pc_right_device_wrong": 4,
+  "pc_wrong_device_right": 0
+ }
+}

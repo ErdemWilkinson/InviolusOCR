@@ -30,6 +30,8 @@ VERSIONS = [
     ("tiny, 11-02", 171, "conv", 66.3, 64.4),
     ("P, 11-07", 298, "conv", 72.8, 71.8),
     ("P2, 11-07", 298, "conv", 73.3, 72.3),
+    ("P3, 11-08", 298, "conv", 73.9, 72.6),
+    ("Pt, 11-08", 171, "conv", 67.7, 65.4),
 ]
 
 # Importance of D's 128 shared sequence channels (normalised Dense L1 norm + sum of normalised
@@ -38,20 +40,20 @@ SEQ_SCORES = [6.53, 6.36, 6.06, 5.99, 5.95, 5.85, 5.84, 5.73, 5.69, 5.67, 5.62, 
 
 ROADMAP_COLUMNS = ["Next", "This week", "Later"]
 ROADMAP = [
-    ("OCR", [[("Train P and S longer on the GPU", "Gate: P beats S by ≥ 2 points on TS-TR", True)],
-             [("Prune D to tiny's size (171 KB)", "Gate: held-out > 64.4%, TS-TR > 32.6%", False),
-              ("Quantization-aware training for the pruned model", "Gate: int8 loses ≤ 2 points on every set", False)],
-             [("Publish a 298 KB model", "Gate: the gates before it, plus an ESP32-P4 measurement", False),
-              ("Feed the GPU faster", "Gate: epoch below 100 s (now 155 s)", False),
+    ("OCR", [[("Publish Pt (171 KB) in place of tiny", "Passed: beats tiny on all three sets (paired test, p ≤ 0.016); waits for the owner's approval", True),
+              ("Publish a 298 KB model (P2 or P3)", "Passed: beats its from-scratch control; 760 ms on the ESP32-P4, under 1 s", True)],
+             [("Quantization-aware training", "Blocked: TF-MOT cannot quantize BatchNorm after Conv1D; fold it or write a custom QuantizeConfig", False),
+              ("Longer pruned runs (2-3 h)", "Gate: still ahead of the same-budget scratch run", False)],
+             [("Feed the GPU faster", "Gate: epoch below 100 s (now 155-180 s)", False),
               ("More real scene-text data", "Gate: licence allows it; no orkungedik data", False)]]),
 ]
 
-D, P2, TINY, P, S = 0, 1, 3, 1, 2  # colour slots follow the model: D blue, P/P2 orange, S aqua, tiny yellow
+D, P2, TINY, P, PT, CTRL = 0, 1, 3, 1, 2, 4  # colour slots follow the model: D blue, P/P2/P3 orange, Pt aqua, tiny yellow, control runs grey
 
 
 def lineage() -> None:
     width, height, col_w, x0, bw, bh = 860, 452, 94, 8, 86, 46
-    cols = ["Oct 9", "Oct 10", "Oct 25", "Oct 31", "Nov 1", "Nov 2", "Nov 4-6", "Nov 7 CPU", "Nov 7 GPU"]
+    cols = ["Oct 9", "Oct 10", "Oct 25", "Oct 31", "Nov 1", "Nov 2", "Nov 4-6", "Nov 7 CPU", "Nov 7-8 GPU"]
     rows = {"lstm": 142, "conv": 244, "prune": 340, "tiny": 422}
     nodes = {  # key: (column, row y, name, sub, held-out int8, status)
         "v1009": (0, rows["lstm"], "Oct 9", "LSTM · 665 KB", 32.9, "old"),
@@ -66,6 +68,7 @@ def lineage() -> None:
         "P2": (8, rows["prune"], "P2", "298 KB", 72.3, "now"),
         "T": (5, rows["tiny"], "tiny", "171 KB", 64.4, "pub"),
         "K": (6, rows["tiny"], "K, K2", "distilled · 171 KB", 63.6, "dead"),
+        "Pt": (8, rows["tiny"], "Pt", "171 KB", 65.4, "now"),
     }
     del nodes["S"]  # S is the control run; it is shown in the pruning chart instead
 
@@ -120,6 +123,9 @@ def lineage() -> None:
         path(f"M{dcx + 14:.0f},{dy0 + bh:.0f} V{rows['prune'] - 44:.0f} H{box('K')[2]:.0f} V{box('K')[1] - 2:.0f}", dash=True)
         label(box("K")[2] + 6, rows["prune"] - 30, "D as teacher")
         label(box("T")[0] - 6, rows["tiny"] + 4, "half width, from scratch →", anchor="end")
+        p2x, p2y0, p2cx, _ = box("P2")
+        path(f"M{p2cx:.0f},{p2y0 + bh:.0f} V{box('Pt')[1] - 2:.0f}", color=t["series"][1], w=2)
+        label(p2cx - 6, (p2y0 + bh + box("Pt")[1]) / 2 + 4, "pruned to 50%", strong=True, anchor="end")
         for k, (c, y, name, sub, score, status) in nodes.items():
             x, top, _, _ = box(k)
             solid = status in ("pub", "now")
@@ -151,27 +157,27 @@ def frontier() -> None:
 
     points = [  # label, KB, held-out int8, kind, label dx, dy, anchor (drawn in this order)
         ("B 78.4", 598, 78.4, "B", -10, -8, "end"),
-        ("tiny 64.4", 171, 64.4, "tiny", 10, 18, "start"),
-        ("S 65.3 (control, from scratch)", 298, 65.3, "S", 10, 18, "start"),
+        ("Pt 65.4 (pruned, candidate)", 171, 65.4, "Pt", 10, 18, "start"),
+        ("tiny 64.4 (published)", 171, 64.4, "tiny", 10, 34, "start"),
         ("P2 72.3 (pruned D)", 298, 72.3, "P2", 10, -8, "start"),
         ("D 77.3 (published)", 598, 77.3, "D", -10, 18, "end"),
         ("Oct 10, 39.5", 665, 39.5, "lstm", -10, 4, "end"),
         ("A, 48.2", 665, 48.2, "lstm", -10, 4, "end"),
         ("Oct 9 and Oct 25, ~32", 665, 32.5, "lstm", -10, 4, "end"),
     ]
-    kinds = {"D": D, "P2": P2, "S": S, "tiny": TINY}
+    kinds = {"D": D, "P2": P2, "Pt": PT, "tiny": TINY}
 
     def body(t: dict) -> str:
         out = [header(t, "Size against accuracy: the frontier moved left and up",
                       "int8 file size and held-out exact-line accuracy of every measured version.",
-                      [("D", D), ("P2", P2), ("S", S), ("tiny", TINY), ("LSTM versions (Oct)", "hollow")])]
+                      [("D", D), ("P2", P2), ("Pt", PT), ("tiny", TINY), ("LSTM versions (Oct)", "hollow")])]
         for v in (0, 25, 50, 75, 100):
             out.append(f'<line x1="{left}" x2="{width - right}" y1="{sy(v):.1f}" y2="{sy(v):.1f}" stroke="{t["grid" if v else "axis"]}"/>'
                        f'<text x="{left - 8}" y="{sy(v) + 4:.1f}" font-size="11" text-anchor="end" fill="{t["muted"]}">{v}%</text>')
         for kb in (0, 100, 200, 300, 400, 500, 600, 700):
             out.append(f'<text x="{sx(kb):.1f}" y="{bottom + 18}" font-size="11" text-anchor="middle" fill="{t["muted"]}">{kb}</text>')
         out.append(f'<text x="{left + pw / 2:.0f}" y="{bottom + 36}" font-size="11.5" text-anchor="middle" fill="{t["text"]}">int8 file size, KB</text>')
-        front = [(171, 64.4), (298, 72.3), (598, 78.4)]
+        front = [(171, 65.4), (298, 72.3), (598, 78.4)]
         out.append(f'<path d="M{" L".join(f"{sx(k):.1f},{sy(v):.1f}" for k, v in front)}" fill="none" stroke="{t["muted"]}" stroke-width="1.5" stroke-dasharray="5 4"/>')
         out.append(f'<text x="{sx(450):.0f}" y="{sy(85):.0f}" font-size="11" text-anchor="middle" fill="{t["muted"]}">best so far at each size</text>')
         for name, kb, v, kind, dx, dy, anchor in points:
@@ -181,8 +187,9 @@ def frontier() -> None:
             elif kind == "B":
                 out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{t["muted"]}" stroke="{t["surface"]}" stroke-width="2"><title>B: 598 KB, 78.4%</title></circle>')
             else:
-                out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="7" fill="{t["series"][kinds[kind]]}" stroke="{t["surface"]}" stroke-width="2"><title>{esc(name)}%, {kb} KB</title></circle>')
-            strong = kind in ("P2", "D", "tiny")
+                r = 5 if kind == "tiny" else 7
+                out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{t["series"][kinds[kind]]}" stroke="{t["surface"]}" stroke-width="2"><title>{esc(name)}%, {kb} KB</title></circle>')
+            strong = kind in ("P2", "D", "tiny", "Pt")
             out.append(f'<text x="{x + dx:.1f}" y="{y + dy:.1f}" font-size="11.5" text-anchor="{anchor}" '
                        f'font-weight="{600 if strong else 400}" fill="{t["title"] if strong else t["text"]}">{esc(name)}</text>')
         return "".join(out)
@@ -199,14 +206,19 @@ def main() -> None:
              [{"label": n, "a": f, "b": q, "highlight": arch == "LSTM"} for n, kb, arch, f, q in VERSIONS],
              divider_before=4, divider_label="conv sequence head from here on")
     grouped_bars(DOCS / "ocr-models", "Current models, int8 device files",
-                 "Exact-line accuracy. D and tiny are on Hugging Face; P2 (pruned D) is a candidate, not yet published.",
+                 "Exact-line accuracy. D and tiny are on Hugging Face; P2 and Pt (pruned) are candidates, not yet published.",
                  ["Held-out lines (12,093)", "TS-TR scene text (2,078)", "Printed documents, donut (2,563)"],
                  [("D · 598 KB", D, [77.3, 56.2, 46.5]), ("P2 · 298 KB", P2, [72.3, 46.0, 33.2]),
-                  ("tiny · 171 KB", TINY, [64.4, 32.6, 20.1])])
-    grouped_bars(DOCS / "ocr-prune-vs-scratch", "Pruned D against the same model trained from scratch",
-                 "Same architecture (298 KB), same data, same 8 epochs; only the starting weights differ. int8 exact-line accuracy.",
-                 ["Held-out lines", "TS-TR scene text", "Printed documents, donut"],
-                 [("P · pruned from D", P, [71.8, 44.5, 31.7]), ("S · from scratch", S, [65.3, 34.4, 20.6])])
+                  ("Pt · 171 KB", PT, [65.4, 34.6, 21.9]), ("tiny · 171 KB", TINY, [64.4, 32.6, 20.1])])
+    grouped_bars(DOCS / "ocr-prune-vs-scratch", "Pruned D against the same model trained from scratch (298 KB)",
+                 "int8 exact-line accuracy. Short run: 8 epochs on the CPU. Long run: 1 hour (~23 epochs) on the GPU. Same data and settings.",
+                 ["Held-out, 8 epochs", "Held-out, 23 epochs", "TS-TR, 8 epochs", "TS-TR, 23 epochs"],
+                 [("pruned from D (P, P3)", P, [71.8, 72.6, 44.5, 45.3]), ("from scratch, control (S, S3)", CTRL, [65.3, 70.3, 34.4, 42.4])])
+    grouped_bars(DOCS / "ocr-prune-tiny", "At 171 KB: pruned model against the current tiny and a scratch control",
+                 "int8 exact-line accuracy. Pt: P2 pruned to half width, 1 GPU hour. St: same architecture from scratch, 1 GPU hour.",
+                 ["Held-out lines (12,093)", "TS-TR scene text (2,078)", "Printed documents, donut (2,563)"],
+                 [("Pt · pruned", PT, [65.4, 34.6, 21.9]), ("tiny · published", TINY, [64.4, 32.6, 20.1]),
+                  ("St · scratch control", CTRL, [63.9, 32.3, 17.4])])
     channel_bars(DOCS / "ocr-pruning-channels", "Which connections pruning cut",
                  "D's 128 sequence channels sorted by importance (BatchNorm |gamma| + weight norm). The pruned model keeps the top 89.",
                  SEQ_SCORES, keep=89)

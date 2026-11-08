@@ -1,0 +1,28 @@
+{
+  "a": "artifacts_P3_1108",
+  "b": "artifacts_S3_1108",
+  "tstr_test": {
+    "rows": 2078,
+    "exact_a": 0.4528392685274302,
+    "exact_b": 0.4239653512993263,
+    "only_a_right": 169,
+    "only_b_right": 109,
+    "mcnemar_p": 0.00038375805532871773
+  },
+  "heldout": {
+    "rows": 12093,
+    "exact_a": 0.7257090879020921,
+    "exact_b": 0.7029686595551146,
+    "only_a_right": 582,
+    "only_b_right": 307,
+    "mcnemar_p": 1.9666650090924913e-20
+  },
+  "donut_test": {
+    "rows": 2563,
+    "exact_a": 0.34178696839641043,
+    "exact_b": 0.29496683573936794,
+    "only_a_right": 258,
+    "only_b_right": 138,
+    "mcnemar_p": 1.6888742621633945e-09
+  }
+}

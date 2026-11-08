@@ -2,8 +2,9 @@
 
 **Türkçe:** Mikrodenetleyiciler için küçük Türkçe OCR modeli. Tek satır basılı
 Türkçe metni okur. Yayındaki int8 TensorFlow Lite dosyası 598 KB, küçük sürümü
-171 KB. 298 KB'lık budanmış bir ara sürüm deneme aşamasında. Grafikler, sürüm
-geçmişi ve yol haritası aşağıda.
+171 KB. Budanarak elde edilen iki aday var: 298 KB'lık P2 ve 171 KB'lık Pt.
+Pt, aynı boyuttaki tiny'yi üç testte de geçiyor; henüz yayımlanmadı. Grafikler,
+sürüm geçmişi ve yol haritası aşağıda.
 
 *Keywords: Turkish OCR, Türkçe OCR, tiny OCR, text recognition, CTC, TFLite,
 int8, TinyML, ESP32, microcontroller.*
@@ -16,13 +17,15 @@ project and was split out because it is a separate concern (a Python and
 TensorFlow training pipeline, not ESP-IDF firmware) with its own, much larger
 dataset.
 
-**Status:** the training pipeline works end to end, and speed and memory are
-measured on an ESP32-P4 board. It is not integrated into any firmware yet.
+**Status:** the training pipeline works end to end. Speed, memory and output on
+real input are measured on an ESP32-P4 board. It is not integrated into any
+firmware yet.
 
 | Model | Params | int8 file | Held-out | TS-TR | Donut | Where |
 |---|---:|---:|---:|---:|---:|---|
 | **D** | 560,954 | 598 KB | **77.3%** | **56.2%** | **46.5%** | [Hugging Face](https://huggingface.co/inviolus/InviolusOCR) (main) |
 | P2, pruned from D | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | candidate, not published |
+| Pt, P2 pruned to half width | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | candidate, not published |
 | **tiny** | 144,330 | 171 KB | 64.4% | 32.6% | 20.1% | [Hugging Face](https://huggingface.co/inviolus/InviolusOCR) |
 
 Scores are the share of lines read exactly right by the int8 file. See
@@ -34,7 +37,7 @@ Scores are the share of lines read exactly right by the int8 file. See
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-models-dark.svg">
-  <img alt="Exact-line accuracy of the int8 files of D, P2 and tiny on three test sets" src="docs/ocr-models-light.svg">
+  <img alt="Exact-line accuracy of the int8 files of D, P2, Pt and tiny on three test sets" src="docs/ocr-models-light.svg">
 </picture>
 
 All models are scored by `scripts/benchmark.py` on the same rows:
@@ -53,6 +56,7 @@ Character error rate of the int8 files:
 |---|---:|---:|---:|
 | D | 10.0% | 18.8% | 12.6% |
 | P2 | 11.8% | 23.9% | 18.1% |
+| Pt | 14.1% | 31.4% | 24.7% |
 | tiny | 14.1% | 31.3% | 24.1% |
 
 What this means:
@@ -63,6 +67,9 @@ What this means:
   exactly.
 - **Smaller costs accuracy, but not evenly.** P2 keeps 94% of D's held-out
   score at half the size. tiny keeps 83% at 29% of the size.
+- **Pt reads more whole lines than tiny, not fewer wrong characters.** Its
+  exact-line scores are higher on all three sets (see below), but its
+  character error rate is the same as tiny's.
 - **None of them meets the acceptance targets yet** (CER ≤ 5%, exact ≥ 80%;
   see [Acceptance targets](#acceptance-targets)).
 
@@ -70,7 +77,7 @@ What this means:
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-lineage-dark.svg">
-  <img alt="Family tree of the model versions from 2026-10-09 to 2026-11-07 with their held-out int8 accuracy" src="docs/ocr-lineage-light.svg">
+  <img alt="Family tree of the model versions from 2026-10-09 to 2026-11-08 with their held-out int8 accuracy" src="docs/ocr-lineage-light.svg">
 </picture>
 
 The biggest step was a change of architecture, not more training. The October
@@ -113,6 +120,10 @@ confusion; they are in the git history up to commit `d210a8b`.
 | P | 2026-11-07 | D pruned to 70% width, 8 epochs | 274,450 | 298 KB | 71.8% | 44.5% | 31.7% | replaced by P2 |
 | S | 2026-11-07 | P's architecture from scratch (control) | 274,450 | 298 KB | 65.3% | 34.4% | 20.6% | control only |
 | **P2** | 2026-11-07 | P + 5 epochs on a GPU | 274,450 | 298 KB | 72.3% | 46.0% | 33.2% | **candidate** |
+| P3 | 2026-11-08 | D pruned to 70% width again, 1 GPU hour (~23 epochs) | 274,450 | 298 KB | 72.6% | 45.3% | 34.2% | same level as P2 |
+| S3 | 2026-11-08 | P3's architecture from scratch, 1 GPU hour (control) | 274,450 | 298 KB | 70.3% | 42.4% | 29.5% | control only |
+| **Pt** | 2026-11-08 | P2 pruned to 50% width, 1 GPU hour | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | **candidate to replace tiny** |
+| St | 2026-11-08 | Pt's architecture from scratch, 1 GPU hour (control) | 144,330 | 171 KB | 63.9% | 32.3% | 17.4% | control only |
 
 n/m: not measured.
 
@@ -123,7 +134,7 @@ What worked and what did not:
 - **Did not work:** more epochs of the same training (10-25 over 10-10, E and
   F over D); distilling D into tiny (K, K2 scored below tiny trained alone).
 
-### Latest experiment: pruning D to half its size
+### Pruning: cutting channels out of a trained model
 
 Does cutting channels out of a trained model give a better small model than
 training that small model from scratch? Liu et al. (2019, "Rethinking the
@@ -153,16 +164,51 @@ every one did some work. That is why the model fails right after the cut and nee
   <img alt="int8 accuracy of the pruned model P and the from-scratch model S on three test sets" src="docs/ocr-prune-vs-scratch-light.svg">
 </picture>
 
-- **Pruning won clearly at this budget:** 6.5 points on held-out lines, 10.1
-  on TS-TR and 11.1 on donut, well above the noise margins.
-- **But the runs were short.** S was still improving faster at the end, so a
-  longer run may close part of the gap. That is the next experiment.
-- **P2** is P trained 5 more epochs on a GPU (learning rate 5e-4, cosine):
-  +0.5, +1.5 and +1.5 points. Small gains, within the noise on held-out and
-  TS-TR, but in the same direction on all three sets.
+- **Short run (8 epochs, CPU):** pruning won by 6.5 points on held-out
+  lines, 10.1 on TS-TR and 11.1 on donut.
+- **Long run (1 hour, ~23 epochs, GPU, 2026-11-08):** pruning still wins, but
+  the gap shrinks to 2.3, 2.9 and 4.7 points, as Liu et al. predict: the model
+  trained from scratch catches up with time, but not fully in this budget.
+- **P2** is P trained 5 more epochs on a GPU: +0.5, +1.5 and +1.5 points.
+  P3, a fresh prune of D trained for one GPU hour, lands at the same level.
 - **int8 loss of P2:** 1.0 point on held-out, 2.7 on TS-TR, 4.1 on donut.
 
-Results: `artifacts/prune-2026-11-07/benchmark_*.json`.
+#### Pruning down to tiny's size (171 KB)
+
+**Pt** is P2 pruned once more, from 70% to 50% width, giving exactly tiny's
+architecture, then trained for one GPU hour. **St** is the same architecture
+from scratch with the same hour, as a control.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-prune-tiny-dark.svg">
+  <img alt="int8 accuracy at 171 KB of the pruned model Pt, the published tiny and the scratch control St" src="docs/ocr-prune-tiny-light.svg">
+</picture>
+
+Two accuracies side by side ignore that both models read the same lines, so
+these comparisons use a paired test (exact McNemar, `scripts/paired_test.py`):
+it counts the lines only one of the two models gets right.
+
+| Comparison | Test set | Exact lines, A | Exact lines, B | Only A right | Only B right | p |
+|---|---|---:|---:|---:|---:|---:|
+| Pt vs tiny | Held-out | 65.4% | 64.4% | 643 | 529 | 0.001 |
+| Pt vs tiny | TS-TR | 34.6% | 32.6% | 167 | 125 | 0.016 |
+| Pt vs tiny | Donut | 21.9% | 20.1% | 169 | 124 | 0.010 |
+| Pt vs St | Held-out | 65.4% | 63.9% | 685 | 504 | < 0.001 |
+| Pt vs St | TS-TR | 34.6% | 32.3% | 161 | 113 | 0.004 |
+| Pt vs St | Donut | 21.9% | 17.4% | 218 | 103 | < 0.001 |
+| P3 vs S3 | Held-out | 72.6% | 70.3% | 582 | 307 | < 0.001 |
+| P3 vs S3 | TS-TR | 45.3% | 42.4% | 169 | 109 | < 0.001 |
+| P3 vs S3 | Donut | 34.2% | 29.5% | 258 | 138 | < 0.001 |
+
+- **Pt beats the published tiny on all three sets**, at the same size and
+  architecture, after one GPU hour (tiny had 260 CPU minutes).
+- **Pruning is the reason:** the same hour from scratch (St) lands at tiny's
+  level, and Pt beats it clearly.
+- **The gain is in whole lines, not characters:** Pt's character error rate
+  equals tiny's (14.1% held-out). It gets more lines entirely right.
+
+Results: `artifacts/prune-2026-11-07/` and `artifacts/night-2026-11-08/`
+(`benchmark_*.json`, `paired_*.json`).
 
 ## Roadmap
 
@@ -177,11 +223,11 @@ A step ships only if it passes its gate.
 
 | Step | Why | Gate to ship | Status |
 |---|---|---|---|
-| Train P and S longer on the GPU (about 1 hour each) | Find out whether pruning still wins with a long budget | P ahead of S by ≥ 2 points on TS-TR | next |
-| Prune D to tiny's size (width 0.5) | The current tiny was trained from scratch; pruning beat that at 298 KB | At 171 KB: held-out > 64.4% and TS-TR > 32.6% | planned |
-| Quantization-aware training for the pruned model | P2 loses 4.1 points on donut when converted to int8 | float-to-int8 loss ≤ 2 points on every set | planned |
-| Publish a 298 KB model on Hugging Face | Fill the gap between tiny and D | The gates above, plus a measurement on the ESP32-P4 | after the above |
-| Feed the GPU faster | The GPU is only about 30% busy; preparing batches is the bottleneck | Epoch time below 100 s (now 155 s) | open |
+| Train pruned and scratch models longer on the GPU | Does pruning still win with a long budget? | Pruned ahead by ≥ 2 points on TS-TR | **passed** 2026-11-08: +2.9 (P3 vs S3, p < 0.001) |
+| Prune to tiny's size (width 0.5) | The current tiny was trained from scratch | At 171 KB: held-out > 64.4% and TS-TR > 32.6% | **passed** 2026-11-08: Pt 65.4% / 34.6%, paired test p ≤ 0.016 |
+| Publish Pt in place of tiny, and a 298 KB model | Better at the same size; fill the gap between tiny and D | The gates above, plus the ESP32-P4 check | **ready**, waiting for the owner's approval |
+| Quantization-aware training for the pruned model | P2 loses 4.1 points on donut when converted to int8 | float-to-int8 loss ≤ 2 points on every set | **blocked:** TF-MOT cannot quantize the BatchNorm after Conv1D; needs BN folding or a custom QuantizeConfig |
+| Feed the GPU faster | The GPU is only about 30% busy | Epoch time below 100 s (now 155-180 s) | open; uint8 images inside tf.data did not help (180 s), so the input is not the bottleneck |
 | More real scene-text data | TS-TR is the weakest set | The licence allows it; no orkungedik data | open |
 
 Not planned again: longer training of the same model, and distilling D into
@@ -189,8 +235,8 @@ tiny (see the version history).
 
 Training moved from the CPU to a laptop GPU on 2026-11-07 (WSL2, Ubuntu
 22.04, TensorFlow 2.15.1, RTX 4050 6 GB). One epoch of the 298 KB model takes
-155 s on the GPU against 46 to 59 minutes on the CPU, so each step above is a
-matter of hours.
+155 to 180 s on the GPU against 46 to 59 minutes on the CPU, so each step
+above is a matter of hours.
 
 ## Why a custom model instead of an existing OCR package
 
@@ -397,27 +443,29 @@ source/font/background-independent held-out set:
 
 Current state: no model meets the CER and exact-line targets yet (D: CER
 10.0%, 77.3% exact on held-out lines). Operators, arena size and latency are
-measured on an ESP32-P4 below: tiny meets the latency target, D does not.
+measured on an ESP32-P4 below: tiny and P2 meet the latency target, D does not.
 
 ## On-device measurement (ESP32-P4)
 
-Measured on 2026-11-06 on one ESP32-P4 board (rev v1.3, 360 MHz, 32 MB flash, 32 MB PSRAM) with ESP-IDF 5.3.5 and `esp-tflite-micro` 1.4.2. Each row is the mean of 20 runs after 2 warm-up runs; the published files were measured byte for byte. One inference is one 160x32 grayscale line. The makeshift-flipper itself is an ESP32-C6; the P4 was a separate development board used only for this measurement.
+Measured on one ESP32-P4 board (rev v1.3, 360 MHz, 32 MB flash, 32 MB PSRAM) with ESP-IDF 5.3.5 and `esp-tflite-micro` 1.4.2, on 2026-11-08. Each latency is the mean of 20 runs after 2 warm-up runs. One inference is one 160x32 grayscale line. The makeshift-flipper itself is an ESP32-C6; the P4 was a separate development board used only for this measurement.
 
-| Model | File | Arena used | Latency, arena in internal SRAM | Latency, arena in PSRAM (200 MHz) |
-|---|---:|---:|---:|---:|
-| InviolusOCR tiny | 171 KB | 172 KB | 413 ms | 417 ms |
-| InviolusOCR D | 598 KB | 339 KB | 1365 ms | 1387 ms |
+| Model | File | Arena used | Latency, internal SRAM | Latency, PSRAM (200 MHz) | Exact lines, PC | Exact lines, device |
+|---|---:|---:|---:|---:|---:|---:|
+| InviolusOCR tiny (Pt has the same architecture) | 171 KB | 172 KB | 419 ms | 423 ms | 33.8% | 35.0% |
+| InviolusOCR P2 (candidate) | 298 KB | 235 KB | **760 ms** | 766 ms | 47.5% | 45.8% |
+| InviolusOCR D | 598 KB | 339 KB | 1404 ms | 1425 ms | 56.7% | 55.4% |
 
-The weights stay in flash; the arena only holds the activations. Both models fit in internal SRAM. P2 (298 KB) has not been measured on the device yet.
+The weights stay in flash; the arena only holds the activations. All three fit in internal SRAM. P2 meets the 1 s per line target; D does not.
+
+**Output on real input:** the device read 240 real TS-TR test photos (every 8th line of the test split), the same int8 tensors the PC interpreter reads. Accuracy holds: device and PC differ by at most 1.7 points on these 240 lines, in both directions, within the noise of the sample. The output is not bit-identical: on 16 to 25% of lines the decoded text differs, on lines the model is unsure about, because the device's int8 kernels round differently.
 
 What this does and does not show:
 
-- Random int8 input: this is **speed and memory only**. The output was not compared with the PC
-  interpreter, so correctness on the device is unchecked.
 - Only the model inference is timed, not image decoding, resizing, CTC decoding.
 - It is an ESP32-P4, not an ESP32-S3. The numbers do not carry over to the S3, which has other cores.
 - Whether ESP-NN's accelerated kernels are active for the P4 was not checked, so the speed may improve.
-- One board. Source and raw output: [benchmarks/esp32-p4](benchmarks/esp32-p4).
+- tiny and D ran 2 to 3% slower than in a first run on 2026-11-06 (413 and 1365 ms) with this larger firmware build.
+- One board. Source, inputs and raw output: [benchmarks/esp32-p4-ocr-check](benchmarks/esp32-p4-ocr-check); the first speed-only run with VoxHOD is in [benchmarks/esp32-p4](benchmarks/esp32-p4).
 
 ## Hardware integration status
 
