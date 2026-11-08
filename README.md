@@ -40,7 +40,7 @@ Scores are the share of lines read exactly right by the int8 file. See
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/ocr-models-dark.svg">
-  <img alt="Exact-line accuracy of the int8 files of D, P2, Pt and tiny on three test sets" src="docs/ocr-models-light.svg">
+  <img alt="Exact-line accuracy of the int8 files of Base, Small, Nano and the replaced tiny on three test sets" src="docs/ocr-models-light.svg">
 </picture>
 
 All models are scored by `scripts/benchmark.py` on the same rows:
@@ -57,20 +57,20 @@ Character error rate of the int8 files:
 
 | Model | Held-out | TS-TR | Donut |
 |---|---:|---:|---:|
-| D | 10.0% | 18.8% | 12.6% |
-| P2 | 11.8% | 23.9% | 18.1% |
-| Pt | 14.1% | 31.4% | 24.7% |
-| tiny | 14.1% | 31.3% | 24.1% |
+| Base | 10.0% | 18.8% | 12.6% |
+| Small | 11.8% | 23.9% | 18.1% |
+| Nano | 14.1% | 31.4% | 24.7% |
+| tiny (replaced) | 14.1% | 31.3% | 24.1% |
 
 What this means:
 
-- **Clean printed lines work.** D reads about three in four held-out lines
+- **Clean printed lines work.** Base reads about three in four held-out lines
   exactly; most errors are one wrong character.
-- **Real scene text is the weak spot.** Even D reads only 56% of TS-TR photos
+- **Real scene text is the weak spot.** Even Base reads only 56% of TS-TR photos
   exactly.
-- **Smaller costs accuracy, but not evenly.** P2 keeps 94% of D's held-out
-  score at half the size. tiny keeps 83% at 29% of the size.
-- **Pt reads more whole lines than tiny, not fewer wrong characters.** Its
+- **Smaller costs accuracy, but not evenly.** Small keeps 94% of Base's
+  held-out score at half the size, Nano 85% at 29% of the size.
+- **Nano reads more whole lines than the old tiny, not fewer wrong characters.** Its
   exact-line scores are higher on all three sets (see below), but its
   character error rate is the same as tiny's.
 - **None of them meets the acceptance targets yet** (CER ≤ 5%, exact ≥ 80%;
@@ -203,7 +203,7 @@ it counts the lines only one of the two models gets right.
 | P3 vs S3 | TS-TR | 45.3% | 42.4% | 169 | 109 | < 0.001 |
 | P3 vs S3 | Donut | 34.2% | 29.5% | 258 | 138 | < 0.001 |
 
-- **Pt beats the published tiny on all three sets**, at the same size and
+- **Pt (now Nano) beats the earlier tiny on all three sets**, at the same size and
   architecture, after one GPU hour (tiny had 260 CPU minutes).
 - **Pruning is the reason:** the same hour from scratch (St) lands at tiny's
   level, and Pt beats it clearly.
@@ -260,7 +260,7 @@ handles variable-length Turkish text correctly.
 - **Architecture** (`OCR_ARCH=conv` in `scripts/train.py`): 4 conv +
   batch-norm + pool blocks, a dense projection, four residual dilated 1-D
   convolutions (dilation 1, 2, 4, 1), and a dense softmax over the character
-  set. `OCR_WIDTH` scales every layer (D: 1.0, P2: 0.7, tiny: 0.5). The older
+  set. `OCR_WIDTH` scales every layer (Base: 1.0, Small: 0.7, Nano: 0.5). The older
   BiLSTM head is still available as `OCR_ARCH=lstm`, which is the default.
 - **Output:** per-timestep character logits (40 timesteps, `IMAGE_WIDTH // 4`),
   including a CTC blank class.
@@ -396,7 +396,7 @@ $env:OCR_AUGMENT = "1"; $env:OCR_COSINE = "1"
 python scripts\train.py
 
 python scripts\export_tflite.py          # writes artifacts/erdem_ocr_int8.tflite
-python scripts\benchmark.py --model D=artifacts --sets tstr_test,heldout,donut_test
+python scripts\benchmark.py --model Base=artifacts --sets tstr_test,heldout,donut_test
 ```
 
 Environment variables read by `train.py`:
@@ -445,9 +445,9 @@ source/font/background-independent held-out set:
 - Model + tensor arena size measured on real target hardware, not guessed
 - First-pass latency target: ≤ 1 second per cropped line
 
-Current state: no model meets the CER and exact-line targets yet (D: CER
+Current state: no model meets the CER and exact-line targets yet (Base: CER
 10.0%, 77.3% exact on held-out lines). Operators, arena size and latency are
-measured on an ESP32-P4 below: tiny and P2 meet the latency target, D does not.
+measured on an ESP32-P4 below: Nano and Small meet the latency target, Base does not.
 
 ## On-device measurement (ESP32-P4)
 
@@ -459,7 +459,7 @@ Measured on one ESP32-P4 board (rev v1.3, 360 MHz, 32 MB flash, 32 MB PSRAM) wit
 | InviolusOCR-Small (P2) | 298 KB | 235 KB | **760 ms** | 766 ms | 47.5% | 45.8% |
 | InviolusOCR-Base (D) | 598 KB | 339 KB | 1404 ms | 1425 ms | 56.7% | 55.4% |
 
-The weights stay in flash; the arena only holds the activations. All three fit in internal SRAM. P2 meets the 1 s per line target; D does not.
+The weights stay in flash; the arena only holds the activations. All three fit in internal SRAM. Small meets the 1 s per line target; Base does not.
 
 **Output on real input:** the device read 240 real TS-TR test photos (every 8th line of the test split), the same int8 tensors the PC interpreter reads. Accuracy holds: device and PC differ by at most 1.7 points on these 240 lines, in both directions, within the noise of the sample. The output is not bit-identical: on 16 to 25% of lines the decoded text differs, on lines the model is unsure about, because the device's int8 kernels round differently.
 
@@ -468,7 +468,7 @@ What this does and does not show:
 - Only the model inference is timed, not image decoding, resizing, CTC decoding.
 - It is an ESP32-P4, not an ESP32-S3. The numbers do not carry over to the S3, which has other cores.
 - Whether ESP-NN's accelerated kernels are active for the P4 was not checked, so the speed may improve.
-- tiny and D ran 2 to 3% slower than in a first run on 2026-11-06 (413 and 1365 ms) with this larger firmware build.
+- tiny and Base ran 2 to 3% slower than in a first run on 2026-11-06 (413 and 1365 ms) with this larger firmware build.
 - One board. Source, inputs and raw output: [benchmarks/esp32-p4-ocr-check](benchmarks/esp32-p4-ocr-check); the first speed-only run with VoxHOD is in [benchmarks/esp32-p4](benchmarks/esp32-p4).
 
 ## Hardware integration status
