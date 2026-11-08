@@ -471,6 +471,38 @@ What this does and does not show:
 - tiny and Base ran 2 to 3% slower than in a first run on 2026-11-06 (413 and 1365 ms) with this larger firmware build.
 - One board. Source, inputs and raw output: [benchmarks/esp32-p4-ocr-check](benchmarks/esp32-p4-ocr-check); the first speed-only run with VoxHOD is in [benchmarks/esp32-p4](benchmarks/esp32-p4).
 
+## Memory budget on ESP32 chips
+
+The arena (the RAM a model needs while it runs) was measured on the ESP32-P4 and is
+almost the same on other ESP32 chips. Free RAM on the P4 was measured in the benchmark
+firmware; free RAM on the S3 and C6 are **estimates** for typical ESP-IDF projects, and the
+real value depends on the firmware. The C6 has no PSRAM, so everything must fit in its
+internal SRAM. Not included: camera frame buffers and the application's own memory.
+
+Arena as a share of the chip's internal SRAM:
+
+| Model | Arena | ESP32-S3 (512 KB) | ESP32-C6 (512 KB) | ESP32-P4 (768 KB) |
+|---|---:|---:|---:|---:|
+| Nano | 168 KB | 33% | 33% | 22% |
+| Small | 229 KB | 45% | 45% | 30% |
+| Base | 331 KB | 65% | 65% | 43% |
+
+Arena as a share of the RAM that is actually free (✅ fits comfortably, ⚠️ fits with little
+room left, ❌ does not fit):
+
+| Model | P4, 569 KB free (measured) | S3, Wi-Fi off, ~350 KB (est.) | S3, Wi-Fi on, ~250 KB (est.) | C6, Wi-Fi off, ~400 KB (est.) | C6, Wi-Fi + BLE on, ~200 KB (est.) |
+|---|---:|---:|---:|---:|---:|
+| Nano | 30% ✅ | 48% ✅ | 67% ✅ | 42% ✅ | 84% ⚠️ |
+| Small | 40% ✅ | 65% ✅ | 92% ⚠️ | 57% ✅ | 115% ❌ |
+| Base | 58% ✅ | 95% ❌* | 132% ❌* | 83% ⚠️ | 166% ❌ |
+
+\* With PSRAM on the S3 the arena can move there and the model runs, more slowly.
+
+Flash is not the limit: even Base takes 15% of a 4 MB flash. On an ESP32-S3 (240 MHz) the
+latency is estimated at roughly 1.2 to 2.5 times the P4's (Nano about 0.5 to 1.0 s per line),
+not measured. In short: the P4 runs all three; the S3 runs Nano and Small (Base only with
+PSRAM); the C6 runs only Nano, and only when Wi-Fi and BLE leave enough RAM.
+
 ## Hardware integration status
 
 This pipeline was deliberately built **before** committing to firmware
