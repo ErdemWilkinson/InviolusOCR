@@ -1,0 +1,50 @@
+VOX P05 START width=0.5 warm=/root/vox/p0.5.h5 lr=1e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 01:45:08
+VOX P05 TRAIN exit 0 Budget reached after epoch 57; best val_loss 1.6876 2026-11-09 02:16:38
+VOX P05 QAT done on gpu 2026-11-09 02:29:32
+VOX P05 EVAL exit 1 2026-11-09 02:31:11
+VOX P05 DONE 2026-11-09 02:31:11
+VOX S05 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 02:31:12
+VOX S05 TRAIN exit 0 Budget reached after epoch 88; best val_loss 1.7275 2026-11-09 03:01:23
+VOX S05 QAT done on gpu 2026-11-09 03:12:28
+VOX S05 EVAL exit 1 2026-11-09 03:13:33
+VOX S05 DONE 2026-11-09 03:13:33
+VOX V30 START width=1 warm=/root/vox/v3.h5 lr=3e-4 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 03:13:34
+VOX V30 TRAIN exit 0 Budget reached after epoch 78; best val_loss 1.7137 2026-11-09 03:43:34
+VOX V30 QAT done on gpu 2026-11-09 03:54:37
+VOX V30 EVAL exit 1 2026-11-09 03:55:47
+VOX V30 DONE 2026-11-09 03:55:47
+VOX PW15 START width=1 warm=/root/vox/v3.h5 lr=3e-4 min=30 qat=10 data=/mnt/d/datasets/voxhod VOX_POS_WEIGHT=1.5 2026-11-09 03:55:47
+VOX PW15 TRAIN exit 0 Budget reached after epoch 111; best val_loss 2.1726 2026-11-09 04:25:53
+VOX PW15 QAT done on gpu 2026-11-09 04:36:59
+VOX PW15 EVAL exit 1 2026-11-09 04:38:10
+VOX PW15 DONE 2026-11-09 04:38:10
+VOX P07 START width=0.7 warm=/root/vox/p0.7.h5 lr=1e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 04:38:10
+VOX P07 TRAIN exit 0 Budget reached after epoch 61; best val_loss 1.5430 2026-11-09 05:08:13
+VOX P07 QAT done on gpu 2026-11-09 05:18:42
+VOX P07 EVAL exit 1 2026-11-09 05:19:47
+VOX P07 DONE 2026-11-09 05:19:47
+VOX S07 START width=0.7 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 05:19:47
+VOX S07 TRAIN exit 0 Budget reached after epoch 97; best val_loss 1.2060 2026-11-09 05:50:00
+VOX S07 QAT done on gpu 2026-11-09 06:01:40
+VOX S07 EVAL exit 1 2026-11-09 06:02:41
+VOX S07 DONE 2026-11-09 06:02:41
+VOX P05b START width=0.5 warm=/root/vox/p0.5.h5 lr=1e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 06:02:41
+VOX P05b TRAIN exit 0 Budget reached after epoch 93; best val_loss 1.5921 2026-11-09 06:32:41
+VOX P05b QAT done on gpu 2026-11-09 06:43:40
+VOX P05b EVAL exit 1 2026-11-09 06:44:36
+VOX P05b DONE 2026-11-09 06:44:36
+VOX S05b START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 06:44:36
+VOX S05b TRAIN exit 0 Budget reached after epoch 125; best val_loss 1.5365 2026-11-09 07:14:45
+VOX S05b QAT done on gpu 2026-11-09 07:25:46
+VOX S05b EVAL exit 1 2026-11-09 07:26:40
+VOX S05b DONE 2026-11-09 07:26:41
+VOX P05c START width=0.5 warm=/root/vox/p0.5.h5 lr=1e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 07:26:41
+VOX P05c TRAIN exit 0 Budget reached after epoch 77; best val_loss 1.6415 2026-11-09 07:56:36
+VOX P05c QAT done on gpu 2026-11-09 08:07:29
+VOX P05c EVAL exit 1 2026-11-09 08:08:24
+VOX P05c DONE 2026-11-09 08:08:24
+VOX S05c START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 08:08:24
+VOX S05c TRAIN exit 0 Budget reached after epoch 127; best val_loss 1.7852 2026-11-09 08:38:34
+VOX S05c QAT done on gpu 2026-11-09 08:49:27
+VOX S05c EVAL exit 1 2026-11-09 08:50:24
+VOX S05c DONE 2026-11-09 08:50:24
