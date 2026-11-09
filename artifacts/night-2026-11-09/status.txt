@@ -48,3 +48,18 @@ VOX S05c TRAIN exit 0 Budget reached after epoch 127; best val_loss 1.7852 2026-
 VOX S05c QAT done on gpu 2026-11-09 08:49:27
 VOX S05c EVAL exit 1 2026-11-09 08:50:24
 VOX S05c DONE 2026-11-09 08:50:24
+VOX NQ START width=0.5 warm=/root/vox/nano.h5 lr=1e-5 min=0.5 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 14:10:25
+VOX NQ TRAIN exit 0 Budget reached after epoch 1; best val_loss 3.3537 2026-11-09 14:11:49
+VOX NQ QAT done on gpu 2026-11-09 14:23:09
+VOX NQ EVAL exit 1 2026-11-09 14:29:58
+VOX NQ DONE 2026-11-09 14:29:58
+VOX NC30 START width=0.5 warm=/root/vox/nano.h5 lr=3e-4 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 14:29:58
+VOX NC30 TRAIN exit 0 Budget reached after epoch 58; best val_loss 2.5909 2026-11-09 15:00:02
+VOX NC30 QAT done on gpu 2026-11-09 15:11:51
+VOX NC30 EVAL exit 1 2026-11-09 15:13:26
+VOX NC30 DONE 2026-11-09 15:13:26
+VOX S05d START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod  2026-11-09 15:13:26
+VOX S05d TRAIN exit 0 Budget reached after epoch 66; best val_loss 1.6110 2026-11-09 15:43:24
+VOX S05d QAT done on gpu 2026-11-09 15:54:50
+VOX S05d EVAL exit 1 2026-11-09 15:56:27
+VOX S05d DONE 2026-11-09 15:56:27
