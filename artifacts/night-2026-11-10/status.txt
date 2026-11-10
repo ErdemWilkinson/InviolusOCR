@@ -1,0 +1,30 @@
+VOX GA1 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_g  2026-11-10 03:42:02
+VOX GA1 TRAIN exit 0 Budget reached after epoch 175; best val_loss 1.7010 2026-11-10 04:14:55
+VOX GA1 QAT done on gpu 2026-11-10 04:26:05
+VOX GA1 EVAL skipped (threshold_sweep on Windows) 2026-11-10 04:26:05
+VOX GA1 DONE 2026-11-10 04:26:05
+VOX GB1 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_gn  2026-11-10 04:26:05
+VOX GB1 TRAIN exit 0 Budget reached after epoch 144; best val_loss 1.5806 2026-11-10 04:56:12
+VOX GB1 QAT done on gpu 2026-11-10 05:07:25
+VOX GB1 EVAL skipped (threshold_sweep on Windows) 2026-11-10 05:07:25
+VOX GB1 DONE 2026-11-10 05:07:25
+VOX GA2 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_g  2026-11-10 05:07:25
+VOX GA2 TRAIN exit 0 Budget reached after epoch 187; best val_loss 1.5113 2026-11-10 05:37:48
+VOX GA2 QAT done on gpu 2026-11-10 05:48:55
+VOX GA2 EVAL skipped (threshold_sweep on Windows) 2026-11-10 05:48:55
+VOX GA2 DONE 2026-11-10 05:48:55
+VOX GB2 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_gn  2026-11-10 05:48:55
+VOX GB2 TRAIN exit 0 Budget reached after epoch 160; best val_loss 1.5780 2026-11-10 06:19:09
+VOX GB2 QAT done on gpu 2026-11-10 06:30:18
+VOX GB2 EVAL skipped (threshold_sweep on Windows) 2026-11-10 06:30:18
+VOX GB2 DONE 2026-11-10 06:30:18
+VOX GA3 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_g  2026-11-10 06:30:18
+VOX GA3 TRAIN exit 0 Budget reached after epoch 196; best val_loss 1.7971 2026-11-10 07:00:36
+VOX GA3 QAT done on gpu 2026-11-10 07:11:48
+VOX GA3 EVAL skipped (threshold_sweep on Windows) 2026-11-10 07:11:48
+VOX GA3 DONE 2026-11-10 07:11:48
+VOX GB3 START width=0.5 warm=scratch lr=2e-3 min=30 qat=10 data=/mnt/d/datasets/voxhod_gn  2026-11-10 07:11:48
+VOX GB3 TRAIN exit 0 Budget reached after epoch 155; best val_loss 1.4500 2026-11-10 07:42:12
+VOX GB3 QAT done on gpu 2026-11-10 07:53:04
+VOX GB3 EVAL skipped (threshold_sweep on Windows) 2026-11-10 07:53:04
+VOX GB3 DONE 2026-11-10 07:53:05

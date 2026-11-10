@@ -1,0 +1,7 @@
+target val recall 0.868 (threshold chosen on val, scored on test / wisard)
+v3       t=0.20 val    rec 0.868 prec 0.109 FA 0.416 F1 0.193 small 0.838
+v3       t=0.20 train_sub rec 0.946 prec 0.628 FA 0.590 F1 0.755 small 0.914
+v3       t=0.20 test   rec 0.839 prec 0.204 FA 0.348 F1 0.328 small 0.842
+nano     t=0.18 val    rec 0.868 prec 0.054 FA 0.894 F1 0.101 small 0.818
+nano     t=0.18 train_sub rec 0.941 prec 0.518 FA 0.920 F1 0.668 small 0.904  d_rec [-0.013,+0.002] d_prec [-0.123,-0.096] d_FA [+0.285,+0.374]
+nano     t=0.18 test   rec 0.831 prec 0.103 FA 0.767 F1 0.183 small 0.829  d_rec [-0.040,+0.023] d_prec [-0.116,-0.088] d_FA [+0.376,+0.461]

@@ -1,0 +1,31 @@
+target val recall 0.781 (threshold chosen on val, scored on test / wisard)
+GA1      t=0.20 val    rec 0.781 prec 0.168 FA 0.610 F1 0.276 small 0.752
+GA1      t=0.20 test   rec 0.801 prec 0.130 FA 0.569 F1 0.224 small 0.782
+GA1      t=0.20 wisard rec 0.654 prec 0.136 FA 0.837 F1 0.225 small 0.396
+GA1      nomad_tn_test FA/tile by distance: 10 m 1.718, 30 m 1.272, 50 m 1.570, 70 m 1.562, 90 m 1.680
+GA1      t=0.20 nomad_tn_test rec 0.000 prec 0.000 FA 1.560 F1 0.000 small 0.000
+GB1      t=0.20 val    rec 0.785 prec 0.131 FA 0.822 F1 0.224 small 0.765
+GB1      t=0.20 test   rec 0.806 prec 0.123 FA 0.608 F1 0.214 small 0.799  d_rec [-0.028,+0.040] d_prec [-0.014,+0.001] d_FA [+0.006,+0.074]
+GB1      t=0.20 wisard rec 0.578 prec 0.189 FA 0.499 F1 0.284 small 0.316  d_rec [-0.100,-0.051] d_prec [+0.044,+0.061] d_FA [-0.370,-0.305]
+GB1      nomad_tn_test FA/tile by distance: 10 m 0.627, 30 m 0.615, 50 m 0.605, 70 m 0.688, 90 m 0.688
+GB1      t=0.20 nomad_tn_test rec 0.000 prec 0.000 FA 0.644 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-1.029,-0.815]
+GA2      t=0.26 val    rec 0.788 prec 0.257 FA 0.358 F1 0.388 small 0.757
+GA2      t=0.26 test   rec 0.761 prec 0.216 FA 0.293 F1 0.337 small 0.765  d_rec [-0.078,-0.005] d_prec [+0.072,+0.101] d_FA [-0.307,-0.244]
+GA2      t=0.26 wisard rec 0.590 prec 0.202 FA 0.469 F1 0.301 small 0.288  d_rec [-0.085,-0.042] d_prec [+0.057,+0.076] d_FA [-0.398,-0.340]
+GA2      nomad_tn_test FA/tile by distance: 10 m 0.897, 30 m 0.840, 50 m 1.038, 70 m 0.932, 90 m 1.103
+GA2      t=0.26 nomad_tn_test rec 0.000 prec 0.000 FA 0.962 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.678,-0.517]
+GB2      t=0.15 val    rec 0.782 prec 0.151 FA 0.693 F1 0.253 small 0.765
+GB2      t=0.15 test   rec 0.812 prec 0.123 FA 0.614 F1 0.214 small 0.816  d_rec [-0.025,+0.047] d_prec [-0.015,+0.001] d_FA [+0.009,+0.080]
+GB2      t=0.15 wisard rec 0.758 prec 0.141 FA 0.927 F1 0.238 small 0.453  d_rec [+0.082,+0.126] d_prec [-0.001,+0.011] d_FA [+0.056,+0.124]
+GB2      nomad_tn_test FA/tile by distance: 10 m 0.855, 30 m 0.718, 50 m 0.840, 70 m 0.785, 90 m 0.805
+GB2      t=0.15 nomad_tn_test rec 0.000 prec 0.000 FA 0.800 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.869,-0.654]
+GA3      t=0.33 val    rec 0.781 prec 0.214 FA 0.451 F1 0.336 small 0.738
+GA3      t=0.33 test   rec 0.761 prec 0.223 FA 0.281 F1 0.345 small 0.756  d_rec [-0.077,-0.003] d_prec [+0.079,+0.109] d_FA [-0.320,-0.256]
+GA3      t=0.33 wisard rec 0.600 prec 0.299 FA 0.283 F1 0.399 small 0.311  d_rec [-0.075,-0.033] d_prec [+0.149,+0.178] d_FA [-0.584,-0.525]
+GA3      nomad_tn_test FA/tile by distance: 10 m 0.705, 30 m 0.613, 50 m 0.795, 70 m 0.795, 90 m 0.922
+GA3      t=0.33 nomad_tn_test rec 0.000 prec 0.000 FA 0.766 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.877,-0.708]
+GB3      t=0.14 val    rec 0.789 prec 0.173 FA 0.593 F1 0.284 small 0.762
+GB3      t=0.14 test   rec 0.815 prec 0.105 FA 0.739 F1 0.186 small 0.808  d_rec [-0.027,+0.054] d_prec [-0.034,-0.017] d_FA [+0.130,+0.208]
+GB3      t=0.14 wisard rec 0.687 prec 0.133 FA 0.895 F1 0.223 small 0.392  d_rec [+0.012,+0.055] d_prec [-0.008,+0.004] d_FA [+0.021,+0.095]
+GB3      nomad_tn_test FA/tile by distance: 10 m 0.845, 30 m 0.700, 50 m 0.810, 70 m 0.792, 90 m 0.912
+GB3      t=0.14 nomad_tn_test rec 0.000 prec 0.000 FA 0.812 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.862,-0.643]
