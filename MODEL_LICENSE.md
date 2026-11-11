@@ -1,6 +1,6 @@
 # License for trained models
 
-The [MIT License](LICENSE) in this repository covers the source code only.
+The [Apache License 2.0](LICENSE) in this repository (with its [NOTICE](NOTICE); commits up to `4c606a0` were MIT) covers the source code only.
 It does not cover trained model files (`*.keras`, `*.tflite`) produced by
 that code, whether or not they are distributed with this repository.
 

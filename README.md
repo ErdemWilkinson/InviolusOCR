@@ -306,7 +306,7 @@ ocr/
 │   └── *.keras, *.tflite, *.npy   # NOT tracked: trained model outputs
 ├── docs/                          # tracked: the charts in this README
 ├── DECISION_NOTES.md              # the model-selection writeup
-├── MODEL_LICENSE.md               # terms for trained models (separate from the MIT code license)
+├── MODEL_LICENSE.md               # terms for trained models (separate from the Apache 2.0 code license)
 └── requirements-train.txt
 ```
 
@@ -541,9 +541,9 @@ confirmed against a real board:
 
 ## License
 
-Code in this repository is released under the [MIT License](LICENSE). The word-frequency list in `data/wordlists/` is third-party data and keeps its original license.
+Code in this repository is released under the [Apache License 2.0](LICENSE) since 2026-11-11 (earlier commits, up to `4c606a0`, were MIT). If you redistribute the code or a work based on it, keep the [NOTICE](NOTICE) file and credit "InviolusOCR by Erdem Aslan" with a link to this repository. The word-frequency list in `data/wordlists/` is third-party data and keeps its original license.
 
-Trained model files are not covered by the MIT License. Models trained with
+Trained model files are not covered by the code license. Models trained with
 non-commercial data are for non-commercial use only; see
 [MODEL_LICENSE.md](MODEL_LICENSE.md) and
 [Third-party data and licenses](#third-party-data-and-licenses).
