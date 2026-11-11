@@ -1,0 +1,16 @@
+VOX K1 START seed=1 width=0.5 min=30 qat=10 data=/mnt/d/datasets/voxhod_g 2026-11-11 10:52:37
+VOX K1 TRAIN exit 0 Budget reached after epoch 181; best val_loss 1.7505 Best val_loss weights (1.7505, epoch 18) saved to /root/vox/artifacts_K1/voxhod_best.keras  2026-11-11 11:23:01
+VOX K1L QAT done on gpu 2026-11-11 11:34:43
+VOX K1B QAT done on gpu 2026-11-11 11:45:48
+VOX K1 DONE 2026-11-11 11:45:48
+VOX K2 START seed=2 width=0.5 min=30 qat=10 data=/mnt/d/datasets/voxhod_g 2026-11-11 11:45:48
+VOX K2 START seed=2 width=0.5 min=30 qat=10 data=/mnt/d/datasets/voxhod_g 2026-11-11 17:57:09
+VOX K3 START seed=3 width=0.5 min=30 qat=10 data=/mnt/d/datasets/voxhod_g 2026-11-11 17:57:29
+VOX K2 TRAIN exit 0 Budget reached after epoch 122; best val_loss 1.8586 Best val_loss weights (1.8586, epoch 54) saved to /root/vox/artifacts_K2/voxhod_best.keras  2026-11-11 18:27:18
+VOX K3 TRAIN exit 0 Budget reached after epoch 121; best val_loss 1.6463 Best val_loss weights (1.6463, epoch 69) saved to /root/vox/artifacts_K3/voxhod_best.keras  2026-11-11 18:27:37
+VOX K2L QAT done on gpu 2026-11-11 18:38:34
+VOX K3L QAT done on gpu 2026-11-11 18:38:41
+VOX K2B QAT done on gpu 2026-11-11 18:49:37
+VOX K2 DONE 2026-11-11 18:49:37
+VOX K3B QAT done on gpu 2026-11-11 18:49:43
+VOX K3 DONE 2026-11-11 18:49:43

@@ -1,0 +1,25 @@
+target val recall 0.781 (threshold chosen on val, scored on test / wisard)
+K1L      t=0.28 val    rec 0.782 prec 0.210 FA 0.463 F1 0.331 small 0.748
+K1L      t=0.28 test   rec 0.774 prec 0.229 FA 0.276 F1 0.354 small 0.786  d_rec [-0.064,+0.008] d_prec [+0.084,+0.116] d_FA [-0.324,-0.263]
+K1L      t=0.28 wisard rec 0.554 prec 0.217 FA 0.401 F1 0.312 small 0.311  d_rec [-0.126,-0.075] d_prec [+0.068,+0.095] d_FA [-0.468,-0.402]
+K1L      t=0.28 nomad_tn_test rec 0.000 prec 0.000 FA 0.902 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.740,-0.579]
+K1B      t=0.25 val    rec 0.781 prec 0.159 FA 0.652 F1 0.264 small 0.740
+K1B      t=0.25 test   rec 0.774 prec 0.178 FA 0.380 F1 0.289 small 0.761  d_rec [-0.064,+0.011] d_prec [+0.037,+0.060] d_FA [-0.220,-0.157]
+K1B      t=0.25 wisard rec 0.622 prec 0.265 FA 0.347 F1 0.372 small 0.316  d_rec [-0.055,-0.009] d_prec [+0.117,+0.143] d_FA [-0.523,-0.460]
+K1B      t=0.25 nomad_tn_test rec 0.000 prec 0.000 FA 0.999 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.648,-0.475]
+K2L      t=0.34 val    rec 0.782 prec 0.244 FA 0.383 F1 0.372 small 0.745
+K2L      t=0.34 test   rec 0.753 prec 0.301 FA 0.185 F1 0.430 small 0.739  d_rec [-0.083,-0.010] d_prec [+0.151,+0.193] d_FA [-0.414,-0.354]
+K2L      t=0.34 wisard rec 0.495 prec 0.331 FA 0.200 F1 0.397 small 0.274  d_rec [-0.185,-0.133] d_prec [+0.176,+0.217] d_FA [-0.666,-0.606]
+K2L      t=0.34 nomad_tn_test rec 0.000 prec 0.000 FA 0.644 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-1.009,-0.831]
+K2B      t=0.29 val    rec 0.785 prec 0.218 FA 0.444 F1 0.341 small 0.752
+K2B      t=0.29 test   rec 0.758 prec 0.251 FA 0.240 F1 0.377 small 0.756  d_rec [-0.079,-0.006] d_prec [+0.105,+0.139] d_FA [-0.359,-0.298]
+K2B      t=0.29 wisard rec 0.538 prec 0.296 FA 0.257 F1 0.382 small 0.316  d_rec [-0.139,-0.092] d_prec [+0.143,+0.178] d_FA [-0.610,-0.551]
+K2B      t=0.29 nomad_tn_test rec 0.000 prec 0.000 FA 0.778 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.860,-0.704]
+K3L      t=0.29 val    rec 0.785 prec 0.219 FA 0.441 F1 0.343 small 0.743
+K3L      t=0.29 test   rec 0.755 prec 0.255 FA 0.235 F1 0.381 small 0.744  d_rec [-0.084,-0.005] d_prec [+0.107,+0.143] d_FA [-0.366,-0.303]
+K3L      t=0.29 wisard rec 0.592 prec 0.375 FA 0.198 F1 0.459 small 0.321  d_rec [-0.084,-0.042] d_prec [+0.222,+0.256] d_FA [-0.667,-0.612]
+K3L      t=0.29 nomad_tn_test rec 0.000 prec 0.000 FA 0.859 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.782,-0.627]
+K3B      t=0.29 val    rec 0.782 prec 0.234 FA 0.405 F1 0.360 small 0.735
+K3B      t=0.29 test   rec 0.750 prec 0.251 FA 0.238 F1 0.376 small 0.735  d_rec [-0.094,-0.010] d_prec [+0.103,+0.140] d_FA [-0.361,-0.301]
+K3B      t=0.29 wisard rec 0.574 prec 0.352 FA 0.212 F1 0.437 small 0.259  d_rec [-0.101,-0.058] d_prec [+0.200,+0.233] d_FA [-0.654,-0.597]
+K3B      t=0.29 nomad_tn_test rec 0.000 prec 0.000 FA 0.837 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-0.801,-0.645]
