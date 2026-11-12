@@ -1,0 +1,76 @@
+TEACHER T0 START effb0 batch=8 lr=5e-4 min=60 seed=1 data=voxhod_g 2026-11-11 20:24:21
+TEACHER T0 TRAIN exit 0 Budget reached after epoch 19; best val_loss 0.5782 Best val_loss weights (0.5782, epoch 8) saved to /root/vox/artifacts_T0/voxhod_best.keras  2026-11-11 21:23:42
+TEACHER T0 HEAT last exit 0 train: 7802 tiles, mean heat 0.0064 val: 4689 tiles, mean heat 0.0032  2026-11-11 21:25:25
+TEACHER T0 HEAT best exit 0 train: 7802 tiles, mean heat 0.0088 val: 4689 tiles, mean heat 0.0048  2026-11-11 21:27:10
+TEACHER T0 DONE 2026-11-11 21:27:10
+VOX D1 START seed=1 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 03:11:37
+VOX D2 START seed=2 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 03:12:37
+VOX D1 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 121; best val_loss 1.4834  2026-11-12 03:41:55
+VOX D2 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 118; best val_loss 1.6710  2026-11-12 03:42:42
+VOX D1 QAT done on gpu 2026-11-12 03:53:32
+VOX D1 DONE 2026-11-12 03:53:32
+VOX K4 START seed=4 teacher=- 2026-11-12 03:53:32
+VOX D2 QAT done on gpu 2026-11-12 03:53:38
+VOX D2 DONE 2026-11-12 03:53:38
+VOX K5 START seed=5 teacher=- 2026-11-12 03:53:38
+SWEEP D1 exit 0 2026-11-12 03:57:42
+SWEEP D2 exit 0 2026-11-12 04:00:48
+QUEUE 1112c START (WSL restarted ~04:14; K4, K5 killed at epoch ~87, rerun from scratch) 2026-11-12 04:26:49
+VOX K4 START seed=4 teacher=- 2026-11-12 04:26:49
+VOX K5 START seed=5 teacher=- 2026-11-12 04:27:49
+VOX K4 TRAIN exit 0 Budget reached after epoch 110; best val_loss 2.2892  2026-11-12 04:57:17
+VOX K5 TRAIN exit 0 Budget reached after epoch 108; best val_loss 1.9827  2026-11-12 04:58:04
+VOX K4 QAT done on gpu 2026-11-12 05:08:55
+VOX K4 DONE 2026-11-12 05:08:56
+VOX D3 START seed=3 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 05:08:56
+VOX K5 QAT done on gpu 2026-11-12 05:09:20
+VOX K5 DONE 2026-11-12 05:09:20
+VOX D4 START seed=4 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 05:09:20
+SWEEP K4 exit 0 2026-11-12 05:12:20
+SWEEP K5 exit 0 2026-11-12 05:14:14
+VOX D3 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 103; best val_loss 1.4248  2026-11-12 05:39:12
+VOX D4 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 105; best val_loss 1.5299  2026-11-12 05:39:46
+VOX D3 QAT done on gpu 2026-11-12 05:50:34
+VOX D3 DONE 2026-11-12 05:50:34
+VOX D5 START seed=5 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 05:50:34
+VOX D4 QAT done on gpu 2026-11-12 05:51:01
+VOX D4 DONE 2026-11-12 05:51:01
+VOX D6 START seed=6 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 05:51:01
+SWEEP D3 exit 0 2026-11-12 05:52:25
+SWEEP D4 exit 0 2026-11-12 05:54:12
+VOX D5 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 105; best val_loss 1.5285  2026-11-12 06:20:55
+VOX D6 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 106; best val_loss 1.6284  2026-11-12 06:21:19
+VOX D6 QAT done on gpu 2026-11-12 06:32:31
+VOX D6 DONE 2026-11-12 06:32:31
+VOX K6 START seed=6 teacher=- 2026-11-12 06:32:31
+VOX D5 QAT done on gpu 2026-11-12 06:32:36
+VOX D5 DONE 2026-11-12 06:32:36
+VOX K7 START seed=7 teacher=- 2026-11-12 06:32:37
+SWEEP D5 exit 0 2026-11-12 06:34:17
+SWEEP D6 exit 0 2026-11-12 06:36:03
+VOX K6 TRAIN exit 0 Budget reached after epoch 111; best val_loss 1.8312  2026-11-12 07:02:45
+VOX K7 TRAIN exit 0 Budget reached after epoch 111; best val_loss 1.9150  2026-11-12 07:02:49
+VOX K6 QAT done on gpu 2026-11-12 07:13:56
+VOX K6 DONE 2026-11-12 07:13:56
+VOX D8 START seed=8 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 07:13:56
+VOX K7 QAT done on gpu 2026-11-12 07:13:56
+VOX K7 DONE 2026-11-12 07:13:56
+VOX D7 START seed=7 teacher=/root/vox/heat_T0_last/train.npy 2026-11-12 07:13:56
+SWEEP K6 exit 0 2026-11-12 07:16:04
+SWEEP K7 exit 0 2026-11-12 07:17:52
+VOX D8 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 106; best val_loss 1.6361  2026-11-12 07:44:16
+VOX D7 TRAIN exit 0 Distilling from /root/vox/heat_T0_last/train.npy (weight 1.0) Budget reached after epoch 107; best val_loss 1.5475  2026-11-12 07:44:25
+VOX D7 QAT done on gpu 2026-11-12 07:55:37
+VOX D7 DONE 2026-11-12 07:55:37
+VOX K8 START seed=8 teacher=- 2026-11-12 07:55:37
+VOX D8 QAT done on gpu 2026-11-12 07:55:56
+VOX D8 DONE 2026-11-12 07:55:56
+SWEEP D7 exit 0 2026-11-12 07:57:36
+SWEEP D8 exit 0 2026-11-12 07:58:55
+VOX K8 TRAIN exit 0 Budget reached after epoch 172; best val_loss 1.6878  2026-11-12 08:25:57
+VOX K8 QAT done on gpu 2026-11-12 08:37:00
+VOX K8 DONE 2026-11-12 08:37:00
+QUEUE 1112 ALL DONE 2026-11-12 08:37:00
+SWEEP K8 exit 0 2026-11-12 08:38:03
+SWEEP WATCH END 2026-11-12 08:39:04
+ANALYSIS DONE: primary FAILED (D-K recall@0.3FA -0.001 [-0.029,+0.024]); NOMAD guard +0.070 failed; WiSARD top-2 -3.1 failed. See RAPOR.md 2026-11-12 08:49:11
