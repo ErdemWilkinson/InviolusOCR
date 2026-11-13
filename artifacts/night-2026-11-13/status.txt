@@ -1,0 +1,59 @@
+SCOUT SWEEP START 2026-11-13 03:20:00
+QUEUE 1113 START 2026-11-13 04:04:03
+VOX S1 START seed=1 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 04:04:03
+VOX S2 START seed=2 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 04:05:03
+VOX S1 TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 25; best val_loss 3.5408  2026-11-13 04:33:42
+VOX S2 TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 24; best val_loss 4.3384  2026-11-13 04:35:55
+VOX S1 QAT done on gpu 2026-11-13 04:44:39
+VOX S1 DONE 2026-11-13 04:44:39
+VOX S3 START seed=3 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 04:44:39
+SWEEP S1 exit 0 2026-11-13 04:47:21
+VOX S2 QAT done on gpu 2026-11-13 04:49:09
+VOX S2 DONE 2026-11-13 04:49:09
+VOX S4 START seed=4 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 04:49:09
+SCOUT SWEEP exit 0 2026-11-13 04:49:16
+SWEEP S2 exit 0 2026-11-13 04:51:22
+VOX S3 TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 21; best val_loss 2.9935  2026-11-13 05:14:07
+VOX S4 TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 21; best val_loss 3.8765  2026-11-13 05:19:32
+VOX S3 QAT done on gpu 2026-11-13 05:27:59
+VOX S3 DONE 2026-11-13 05:27:59
+VOX S5 START seed=5 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 05:27:59
+SWEEP S3 exit 0 2026-11-13 05:30:12
+VOX S4 QAT done on gpu 2026-11-13 05:35:36
+VOX S4 DONE 2026-11-13 05:35:36
+SWEEP S4 exit 0 2026-11-13 05:37:37
+VOX S5 TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 114; best val_loss 3.2369  2026-11-13 05:58:24
+VOX S5 QAT done on gpu 2026-11-13 06:09:23
+VOX S5 DONE 2026-11-13 06:09:23
+QUEUE 1113 ALL DONE 2026-11-13 06:09:23
+SWEEP S5 exit 0 2026-11-13 06:10:38
+SWEEP WATCH END 2026-11-13 06:11:38
+QUEUE 1113b START 2026-11-13 06:12:02
+VOX S1b START seed=1 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 06:12:02
+VOX S1b TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 80; best val_loss 4.4484  2026-11-13 06:30:22
+VOX S1b QAT done on gpu 2026-11-13 06:41:11
+VOX S1b DONE 2026-11-13 06:41:11
+VOX S2b START seed=2 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 06:41:11
+SWEEP S1b exit 0 2026-11-13 06:42:16
+VOX S2b TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 84; best val_loss 3.1603  2026-11-13 06:59:17
+VOX S2b QAT done on gpu 2026-11-13 07:10:00
+VOX S2b DONE 2026-11-13 07:10:00
+VOX S3b START seed=3 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 07:10:00
+SWEEP S2b exit 0 2026-11-13 07:11:35
+VOX S3b TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 83; best val_loss 2.9062  2026-11-13 07:28:05
+VOX S3b QAT done on gpu 2026-11-13 07:38:49
+VOX S3b DONE 2026-11-13 07:38:50
+VOX S4b START seed=4 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 07:38:50
+SWEEP S3b exit 0 2026-11-13 07:40:54
+VOX S4b TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 83; best val_loss 3.4799  2026-11-13 07:56:58
+VOX S4b QAT done on gpu 2026-11-13 08:07:40
+VOX S4b DONE 2026-11-13 08:07:40
+VOX S5b START seed=5 extra=/mnt/d/datasets/sard_tiles/train.npz 2026-11-13 08:07:40
+SWEEP S4b exit 0 2026-11-13 08:09:09
+VOX S5b TRAIN exit 0 Extra training tiles: 4505 from /mnt/d/datasets/sard_tiles/train.npz Budget reached after epoch 85; best val_loss 4.1688  2026-11-13 08:25:44
+VOX S5b QAT done on gpu 2026-11-13 08:36:23
+VOX S5b DONE 2026-11-13 08:36:23
+QUEUE 1113b ALL DONE 2026-11-13 08:36:23
+SWEEP S5b exit 0 2026-11-13 08:37:58
+SWEEP WATCH END 2026-11-13 08:38:58
+ANALYSIS DONE: B passed (NOMAD FA -0.76), A -0.4 lower bound, guard HERIDAL recall at budget failed -> NOT PASSED. See RAPOR.md 2026-11-13 08:44:21
