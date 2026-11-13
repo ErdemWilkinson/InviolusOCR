@@ -44,3 +44,13 @@ SARD'ın ayrılmış test bloğu (son %20 kare, aynı video, tanımlayıcı): 0,
   - (a) val bölmesindeki bu alarmlara bakmak (hangi arazi, neye benziyor);
   - (b) tam HERIDAL + SARD ile v3 ve nanoyu yeniden eğitip yayındaki modellerle aynı kuralla karşılaştırmak.
   Ama bunun kuralı da önceden yazılmalı.
+
+## 4. Ek (08:50): S'ler val'de neye alarm veriyor? (tanımlayıcı, karardan sonra)
+
+Val'in boş karolarında, eşik 0,3'te karo başına tespit sayısı K'de **0,40**, S'de **1,46**. S'nin K'ye göre en çok fazla alarm verdiği 12 boş karo
+[analysis/val_false_alarms_S.png](analysis/val_false_alarms_S.png) dosyasında (HERIDAL, CC BY 3.0; kırmızı halkalar S3b'nin tespitleri).
+Hepsi **otlu karst arazide küçük beyaz taşlar**. SARD'daki insanlar çoğunlukla yeşil çimende ve açık renk giysili. Görünüşe göre
+nano "küçük parlak leke = insan" kuralını öğrenmiş (hipotez). HERIDAL'in val konumları bu tür arazide, test konumları daha az.
+
+Sıradaki deney için somut öneri: SARD'la birlikte **beyaz taşlı boş karst karolarını** (HERIDAL eğitim fotoğraflarının boş kısımlarından)
+daha fazla eklemek; kuralı önceden yazıp aynı 5'e 5 düzenle tekrar etmek.
