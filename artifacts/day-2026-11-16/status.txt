@@ -1,0 +1,28 @@
+QUEUE 1116 START 2026-11-16 17:54:10
+VOX R1 START seed=1 extra=/mnt/d/datasets/sard_karst/train.npz 2026-11-16 17:54:10
+VOX R1 TRAIN exit 0 Extra training tiles: 6425 from /mnt/d/datasets/sard_karst/train.npz Budget reached after epoch 36; best val_loss 3.1450  2026-11-16 18:09:19
+VOX R1 QAT done on gpu 2026-11-16 18:20:50
+VOX R1 DONE 2026-11-16 18:20:51
+VOX R2 START seed=2 extra=/mnt/d/datasets/sard_karst/train.npz 2026-11-16 18:20:51
+VOX R2 TRAIN exit 0 Extra training tiles: 6425 from /mnt/d/datasets/sard_karst/train.npz Budget reached after epoch 51; best val_loss 4.1391  2026-11-16 18:36:19
+VOX R2 QAT done on gpu 2026-11-16 18:47:39
+VOX R2 DONE 2026-11-16 18:47:40
+VOX R3 START seed=3 extra=/mnt/d/datasets/sard_karst/train.npz 2026-11-16 18:47:40
+VOX R3 TRAIN exit 0 Extra training tiles: 6425 from /mnt/d/datasets/sard_karst/train.npz Budget reached after epoch 37; best val_loss 3.2289  2026-11-16 19:03:10
+VOX R3 QAT done on gpu 2026-11-16 19:15:17
+VOX R3 DONE 2026-11-16 19:15:17
+VOX R4 START seed=4 extra=/mnt/d/datasets/sard_karst/train.npz 2026-11-16 19:15:17
+VOX R4 TRAIN exit 0 Extra training tiles: 6425 from /mnt/d/datasets/sard_karst/train.npz Budget reached after epoch 29; best val_loss 3.0194  2026-11-16 19:31:02
+VOX R4 QAT done on gpu 2026-11-16 19:43:52
+VOX R4 DONE 2026-11-16 19:43:52
+VOX R5 START seed=5 extra=/mnt/d/datasets/sard_karst/train.npz 2026-11-16 19:43:53
+VOX R5 TRAIN exit 0 Extra training tiles: 6425 from /mnt/d/datasets/sard_karst/train.npz Budget reached after epoch 30; best val_loss 4.2727  2026-11-16 19:59:33
+VOX R5 QAT done on gpu 2026-11-16 20:12:08
+VOX R5 DONE 2026-11-16 20:12:08
+QUEUE 1116 ALL DONE 2026-11-16 20:12:08
+SWEEP R1 exit 0 2026-11-16 21:38:28
+SWEEP R2 exit 0 2026-11-16 21:39:20
+SWEEP R3 exit 0 2026-11-16 21:40:13
+SWEEP R4 exit 0 2026-11-16 21:41:05
+SWEEP R5 exit 0 2026-11-16 21:41:59
+SWEEP WATCH END 2026-11-16 21:42:59
