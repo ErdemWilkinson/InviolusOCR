@@ -1,0 +1,31 @@
+
+target val recall 0.7808, val FA budget 0.610/tile (reference GA1 at 0.20)
+run    thrR  thrB | test R-rule rec/FA | test B-rule rec/FA | NOMAD FA R/B | WiSARD rec R/B
+GA1    0.20  0.20 | 0.801 0.569 | 0.801 0.569 | 1.56 1.56 | 0.654 0.654
+R1     0.33  0.36 | 0.785 0.221 | 0.761 0.177 | 0.45 0.36 | 0.596 0.540
+R2     0.30  0.39 | 0.809 0.340 | 0.718 0.138 | 0.62 0.28 | 0.716 0.530
+R3     0.32  0.38 | 0.782 0.308 | 0.728 0.163 | 0.53 0.29 | 0.643 0.511
+R4     0.30  0.41 | 0.785 0.368 | 0.637 0.127 | 0.45 0.15 | 0.563 0.338
+R5     0.32  0.44 | 0.780 0.277 | 0.551 0.065 | 0.42 0.13 | 0.598 0.299
+T1     0.31  0.29 | 0.753 0.157 | 0.769 0.169 | 0.45 0.49 | 0.668 0.677
+T2     0.30  0.36 | 0.782 0.210 | 0.699 0.113 | 0.47 0.26 | 0.605 0.501
+T3     0.27  0.28 | 0.793 0.229 | 0.785 0.200 | 0.57 0.50 | 0.618 0.589
+T4     0.27  0.30 | 0.788 0.269 | 0.758 0.186 | 0.60 0.43 | 0.630 0.549
+T5     0.30  0.35 | 0.796 0.202 | 0.750 0.123 | 0.52 0.34 | 0.514 0.404
+
+T - R (mean of runs; hierarchical 95% CI: runs + photos/frames)
+  test_recall_rule_recall            R 0.788  T 0.782  diff -0.006  [-0.034, +0.022]
+  test_recall_rule_fa                R 0.303  T 0.214  diff -0.089  [-0.133, -0.056]
+  nomad_tn_test_recall_rule_recall   R 0.000  T 0.000  diff +0.000  [+0.000, +0.000]
+  nomad_tn_test_recall_rule_fa       R 0.496  T 0.523  diff +0.027  [-0.074, +0.114]
+  test_budget_rule_recall            R 0.679  T 0.752  diff +0.073  [+0.003, +0.150]
+  test_budget_rule_fa                R 0.134  T 0.158  diff +0.024  [-0.011, +0.056]
+  nomad_tn_test_budget_rule_recall   R 0.000  T 0.000  diff +0.000  [+0.000, +0.000]
+  nomad_tn_test_budget_rule_fa       R 0.243  T 0.402  diff +0.160  [+0.060, +0.245]
+  test_fa_at_recall_0.75             R 0.208  T 0.150  diff -0.059  [-0.127, -0.000]
+  test_fa_at_recall_0.78             R 0.291  T 0.214  diff -0.077  [-0.167, +0.012]
+  test_fa_at_recall_0.8              R 0.368  T 0.283  diff -0.085  [-0.203, +0.035]
+  test_recall_at_fa_0.2              R 0.741  T 0.770  diff +0.030  [-0.002, +0.065]
+  test_recall_at_fa_0.3              R 0.786  T 0.807  diff +0.021  [-0.006, +0.045]
+  test_recall_at_fa_0.5              R 0.828  T 0.841  diff +0.013  [-0.014, +0.036]
+  (old tile-level CI, recall rule, test: recall [-0.023,+0.011], FA [-0.103,-0.077])

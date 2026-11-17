@@ -1,0 +1,170 @@
+2026-11-17 03:09:12.661315: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-11-17 03:09:12.690187: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-11-17 03:09:12.744309: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz
+Train tiles: 14899, validation tiles: 4689
+VoxHOD parameters: 37,363
+Epoch 1/1000
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794874197.791413   27726 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+466/466 - 40s - loss: 3.1680 - val_loss: 6.8505 - 40s/epoch - 86ms/step
+Epoch 2/1000
+466/466 - 17s - loss: 2.0129 - val_loss: 7.3253 - 17s/epoch - 37ms/step
+Epoch 3/1000
+466/466 - 17s - loss: 1.7801 - val_loss: 4.3923 - 17s/epoch - 36ms/step
+Epoch 4/1000
+466/466 - 17s - loss: 1.6591 - val_loss: 5.2508 - 17s/epoch - 37ms/step
+Epoch 5/1000
+466/466 - 18s - loss: 1.5904 - val_loss: 7.1638 - 18s/epoch - 38ms/step
+Epoch 6/1000
+466/466 - 33s - loss: 1.5277 - val_loss: 5.2192 - 33s/epoch - 71ms/step
+Epoch 7/1000
+466/466 - 28s - loss: 1.4810 - val_loss: 6.8355 - 28s/epoch - 60ms/step
+Epoch 8/1000
+466/466 - 33s - loss: 1.4512 - val_loss: 7.9423 - 33s/epoch - 70ms/step
+Epoch 9/1000
+466/466 - 24s - loss: 1.4084 - val_loss: 5.6047 - 24s/epoch - 52ms/step
+Epoch 10/1000
+466/466 - 24s - loss: 1.3828 - val_loss: 8.9303 - 24s/epoch - 50ms/step
+Epoch 11/1000
+466/466 - 24s - loss: 1.3506 - val_loss: 4.3111 - 24s/epoch - 52ms/step
+Epoch 12/1000
+466/466 - 23s - loss: 1.3374 - val_loss: 7.5800 - 23s/epoch - 50ms/step
+Epoch 13/1000
+466/466 - 23s - loss: 1.2997 - val_loss: 4.8471 - 23s/epoch - 50ms/step
+Epoch 14/1000
+466/466 - 23s - loss: 1.2835 - val_loss: 6.3500 - 23s/epoch - 49ms/step
+Epoch 15/1000
+466/466 - 22s - loss: 1.2744 - val_loss: 7.7053 - 22s/epoch - 47ms/step
+Epoch 16/1000
+466/466 - 21s - loss: 1.2482 - val_loss: 19.7863 - 21s/epoch - 46ms/step
+Epoch 17/1000
+466/466 - 24s - loss: 1.2365 - val_loss: 6.7730 - 24s/epoch - 51ms/step
+Epoch 18/1000
+466/466 - 24s - loss: 1.2270 - val_loss: 3.2766 - 24s/epoch - 52ms/step
+Epoch 19/1000
+466/466 - 20s - loss: 1.2139 - val_loss: 6.4575 - 20s/epoch - 42ms/step
+Epoch 20/1000
+466/466 - 18s - loss: 1.1967 - val_loss: 5.7329 - 18s/epoch - 40ms/step
+Epoch 21/1000
+466/466 - 18s - loss: 1.1858 - val_loss: 6.3534 - 18s/epoch - 39ms/step
+Epoch 22/1000
+466/466 - 18s - loss: 1.1663 - val_loss: 4.3691 - 18s/epoch - 38ms/step
+Epoch 23/1000
+466/466 - 17s - loss: 1.1676 - val_loss: 5.8385 - 17s/epoch - 36ms/step
+Epoch 24/1000
+466/466 - 17s - loss: 1.1529 - val_loss: 2.6600 - 17s/epoch - 37ms/step
+Epoch 25/1000
+466/466 - 32s - loss: 1.1458 - val_loss: 4.4425 - 32s/epoch - 69ms/step
+Epoch 26/1000
+466/466 - 26s - loss: 1.1328 - val_loss: 3.6275 - 26s/epoch - 56ms/step
+Epoch 27/1000
+466/466 - 26s - loss: 1.1282 - val_loss: 4.4073 - 26s/epoch - 56ms/step
+Epoch 28/1000
+466/466 - 24s - loss: 1.1077 - val_loss: 8.7455 - 24s/epoch - 52ms/step
+Epoch 29/1000
+466/466 - 23s - loss: 1.1061 - val_loss: 5.3564 - 23s/epoch - 50ms/step
+Epoch 30/1000
+466/466 - 25s - loss: 1.0987 - val_loss: 3.9397 - 25s/epoch - 53ms/step
+Epoch 31/1000
+466/466 - 24s - loss: 1.0891 - val_loss: 7.7444 - 24s/epoch - 52ms/step
+Epoch 32/1000
+466/466 - 23s - loss: 1.0830 - val_loss: 3.4104 - 23s/epoch - 49ms/step
+Epoch 33/1000
+466/466 - 22s - loss: 1.0745 - val_loss: 3.6505 - 22s/epoch - 48ms/step
+Epoch 34/1000
+466/466 - 23s - loss: 1.0695 - val_loss: 2.6013 - 23s/epoch - 50ms/step
+Epoch 35/1000
+466/466 - 22s - loss: 1.0626 - val_loss: 5.7343 - 22s/epoch - 48ms/step
+Epoch 36/1000
+466/466 - 23s - loss: 1.0597 - val_loss: 5.3276 - 23s/epoch - 50ms/step
+Epoch 37/1000
+466/466 - 23s - loss: 1.0520 - val_loss: 3.8370 - 23s/epoch - 49ms/step
+Epoch 38/1000
+466/466 - 22s - loss: 1.0458 - val_loss: 7.9036 - 22s/epoch - 48ms/step
+Epoch 39/1000
+466/466 - 22s - loss: 1.0423 - val_loss: 5.9255 - 22s/epoch - 48ms/step
+Epoch 40/1000
+466/466 - 23s - loss: 1.0344 - val_loss: 6.4797 - 23s/epoch - 50ms/step
+Epoch 41/1000
+466/466 - 22s - loss: 1.0262 - val_loss: 4.9789 - 22s/epoch - 47ms/step
+Epoch 42/1000
+466/466 - 20s - loss: 1.0268 - val_loss: 4.2915 - 20s/epoch - 43ms/step
+Epoch 43/1000
+466/466 - 23s - loss: 1.0176 - val_loss: 3.7082 - 23s/epoch - 49ms/step
+Epoch 44/1000
+466/466 - 24s - loss: 1.0052 - val_loss: 7.2076 - 24s/epoch - 51ms/step
+Epoch 45/1000
+466/466 - 23s - loss: 1.0093 - val_loss: 6.1072 - 23s/epoch - 49ms/step
+Epoch 46/1000
+466/466 - 21s - loss: 0.9967 - val_loss: 4.8520 - 21s/epoch - 46ms/step
+Epoch 47/1000
+466/466 - 19s - loss: 1.0014 - val_loss: 4.4560 - 19s/epoch - 40ms/step
+Epoch 48/1000
+466/466 - 19s - loss: 0.9958 - val_loss: 3.6087 - 19s/epoch - 40ms/step
+Epoch 49/1000
+466/466 - 18s - loss: 0.9978 - val_loss: 6.2752 - 18s/epoch - 39ms/step
+Epoch 50/1000
+466/466 - 17s - loss: 0.9876 - val_loss: 4.4355 - 17s/epoch - 36ms/step
+Epoch 51/1000
+466/466 - 17s - loss: 0.9859 - val_loss: 5.3835 - 17s/epoch - 37ms/step
+Epoch 52/1000
+466/466 - 18s - loss: 0.9756 - val_loss: 5.0907 - 18s/epoch - 39ms/step
+Epoch 53/1000
+466/466 - 20s - loss: 0.9727 - val_loss: 4.4918 - 20s/epoch - 43ms/step
+Epoch 54/1000
+466/466 - 21s - loss: 0.9759 - val_loss: 5.1692 - 21s/epoch - 46ms/step
+Epoch 55/1000
+466/466 - 22s - loss: 0.9683 - val_loss: 4.6003 - 22s/epoch - 46ms/step
+Epoch 56/1000
+466/466 - 21s - loss: 0.9698 - val_loss: 4.5766 - 21s/epoch - 44ms/step
+Epoch 57/1000
+466/466 - 25s - loss: 0.9653 - val_loss: 5.1224 - 25s/epoch - 55ms/step
+Epoch 58/1000
+466/466 - 20s - loss: 0.9678 - val_loss: 3.8515 - 20s/epoch - 43ms/step
+Epoch 59/1000
+466/466 - 20s - loss: 0.9601 - val_loss: 4.2401 - 20s/epoch - 43ms/step
+Epoch 60/1000
+466/466 - 19s - loss: 0.9616 - val_loss: 5.4785 - 19s/epoch - 42ms/step
+Epoch 61/1000
+466/466 - 20s - loss: 0.9591 - val_loss: 4.7799 - 20s/epoch - 43ms/step
+Epoch 62/1000
+466/466 - 19s - loss: 0.9504 - val_loss: 4.4068 - 19s/epoch - 40ms/step
+Epoch 63/1000
+466/466 - 15s - loss: 0.9516 - val_loss: 5.0369 - 15s/epoch - 32ms/step
+Epoch 64/1000
+466/466 - 15s - loss: 0.9505 - val_loss: 4.2799 - 15s/epoch - 32ms/step
+Epoch 65/1000
+466/466 - 15s - loss: 0.9457 - val_loss: 5.4653 - 15s/epoch - 32ms/step
+Epoch 66/1000
+466/466 - 15s - loss: 0.9431 - val_loss: 3.9231 - 15s/epoch - 32ms/step
+Epoch 67/1000
+466/466 - 16s - loss: 0.9389 - val_loss: 3.9025 - 16s/epoch - 34ms/step
+Epoch 68/1000
+466/466 - 20s - loss: 0.9370 - val_loss: 4.2470 - 20s/epoch - 43ms/step
+Epoch 69/1000
+466/466 - 22s - loss: 0.9429 - val_loss: 4.6503 - 22s/epoch - 47ms/step
+Epoch 70/1000
+466/466 - 28s - loss: 0.9342 - val_loss: 4.2800 - 28s/epoch - 61ms/step
+Epoch 71/1000
+466/466 - 30s - loss: 0.9435 - val_loss: 4.7319 - 30s/epoch - 64ms/step
+Epoch 72/1000
+466/466 - 32s - loss: 0.9381 - val_loss: 4.8334 - 32s/epoch - 68ms/step
+Epoch 73/1000
+466/466 - 24s - loss: 0.9372 - val_loss: 4.1716 - 24s/epoch - 51ms/step
+Epoch 74/1000
+466/466 - 20s - loss: 0.9345 - val_loss: 4.2611 - 20s/epoch - 42ms/step
+Epoch 75/1000
+466/466 - 21s - loss: 0.9325 - val_loss: 4.3981 - 21s/epoch - 46ms/step
+Epoch 76/1000
+466/466 - 21s - loss: 0.9278 - val_loss: 4.4123 - 21s/epoch - 46ms/step
+Epoch 77/1000
+466/466 - 21s - loss: 0.9350 - val_loss: 4.4011 - 21s/epoch - 45ms/step
+Epoch 78/1000
+466/466 - 21s - loss: 0.9283 - val_loss: 4.3012 - 21s/epoch - 44ms/step
+Epoch 79/1000
+466/466 - 24s - loss: 0.9327 - val_loss: 4.3143 - 24s/epoch - 53ms/step
+Epoch 80/1000
+Budget reached after epoch 80; best val_loss 2.6013
+466/466 - 20s - loss: 0.9355 - val_loss: 4.2986 - 20s/epoch - 43ms/step
+Best val_loss weights (2.6013, epoch 34) saved to /root/vox/artifacts_T4/voxhod_best.keras

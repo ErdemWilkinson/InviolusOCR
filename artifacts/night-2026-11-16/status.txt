@@ -1,0 +1,37 @@
+QUEUE 1117 START 2026-11-17 00:51:32
+VOX T1 START seed=1 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 00:51:32
+AMENDMENT 01:05: T restarted with 30 min float 2026-11-17 01:03:03
+QUEUE 1117 START 2026-11-17 01:03:36
+VOX T1 START seed=1 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 01:03:36
+VOX T1 TRAIN exit 0 Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz Budget reached after epoch 90; best val_loss 2.2205  2026-11-17 01:34:11
+VOX T1 QAT done on gpu 2026-11-17 01:45:31
+VOX T1 DONE 2026-11-17 01:45:31
+VOX T2 START seed=2 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 01:45:32
+SWEEP T1 exit 0 2026-11-17 01:52:41
+VOX T2 TRAIN exit 0 Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz Budget reached after epoch 102; best val_loss 3.2842  2026-11-17 02:16:15
+VOX T2 QAT done on gpu 2026-11-17 02:27:42
+VOX T2 DONE 2026-11-17 02:27:43
+VOX T3 START seed=3 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 02:27:43
+SWEEP T2 exit 0 2026-11-17 02:31:01
+VOX T3 TRAIN exit 0 Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz Budget reached after epoch 107; best val_loss 2.3994  2026-11-17 02:57:55
+VOX T3 QAT done on gpu 2026-11-17 03:09:12
+VOX T3 DONE 2026-11-17 03:09:12
+VOX T4 START seed=4 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 03:09:12
+SWEEP T3 exit 0 2026-11-17 03:31:32
+VOX T4 TRAIN exit 0 Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz Budget reached after epoch 80; best val_loss 2.6013  2026-11-17 03:39:34
+VOX T4 QAT done on gpu 2026-11-17 03:51:21
+VOX T4 DONE 2026-11-17 03:51:21
+VOX T5 START seed=5 extra=/mnt/d/datasets/sard_karst_serbia/train.npz 2026-11-17 03:51:21
+SWEEP T4 exit 0 2026-11-17 03:53:31
+VOX T5 TRAIN exit 0 Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz Budget reached after epoch 114; best val_loss 3.3576  2026-11-17 04:21:45
+VOX T5 QAT done on gpu 2026-11-17 04:32:59
+VOX T5 DONE 2026-11-17 04:32:59
+QUEUE 1117 ALL DONE 2026-11-17 04:32:59
+ASR START budget 251 min 2026-11-17 04:33:55
+SWEEP T5 exit 0 2026-11-17 04:34:40
+SWEEP WATCH END 2026-11-17 04:35:40
+ASR TRAIN exit 0 Saving best epoch, val_loss 57.4823. 2026-11-17 08:31:22
+ASR EVAL cv exit 0 "cer": 0.511658382286489 2026-11-17 08:31:44
+ASR EVAL issai exit 0 "cer": 0.5092721899256276 2026-11-17 08:31:58
+ASR EVAL fleurs exit 0 "cer": 0.4738075761389378 2026-11-17 08:32:13
+ASR DONE 2026-11-17 08:32:13

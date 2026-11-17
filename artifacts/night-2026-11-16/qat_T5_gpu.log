@@ -1,0 +1,70 @@
+2026-11-17 04:21:45.471097: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-11-17 04:21:45.471893: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-11-17 04:21:45.473955: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Extra training tiles: 7097 from /mnt/d/datasets/sard_karst_serbia/train.npz
+Train tiles: 14899, validation tiles: 4689
+Warm start from /root/vox/artifacts_T5/voxhod.keras
+VoxHOD parameters: 37,363
+Epoch 1/1000
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794878538.698417   41162 device_compiler.h:186] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+Budget reached after epoch 1; best val_loss 5.4457
+466/466 - 35s - loss: 0.8963 - val_loss: 5.4457 - 35s/epoch - 75ms/step
+Best val_loss weights (5.4457, epoch 1) saved to /root/vox/artifacts_T5q/voxhod_best.keras
+Epoch 1/1000
+466/466 - 46s - loss: 1.0226 - val_loss: 5.4101 - 46s/epoch - 98ms/step
+Epoch 2/1000
+466/466 - 36s - loss: 0.9331 - val_loss: 5.8993 - 36s/epoch - 78ms/step
+Epoch 3/1000
+466/466 - 36s - loss: 0.9276 - val_loss: 5.4750 - 36s/epoch - 77ms/step
+Epoch 4/1000
+466/466 - 37s - loss: 0.9163 - val_loss: 5.2421 - 37s/epoch - 79ms/step
+Epoch 5/1000
+466/466 - 37s - loss: 0.9125 - val_loss: 4.9379 - 37s/epoch - 79ms/step
+Epoch 6/1000
+466/466 - 36s - loss: 0.9103 - val_loss: 5.4908 - 36s/epoch - 77ms/step
+Epoch 7/1000
+466/466 - 37s - loss: 0.9088 - val_loss: 4.7810 - 37s/epoch - 79ms/step
+Epoch 8/1000
+466/466 - 36s - loss: 0.9081 - val_loss: 5.9020 - 36s/epoch - 78ms/step
+Epoch 9/1000
+466/466 - 36s - loss: 0.9079 - val_loss: 6.0605 - 36s/epoch - 78ms/step
+Epoch 10/1000
+466/466 - 36s - loss: 0.9081 - val_loss: 5.9648 - 36s/epoch - 78ms/step
+Epoch 11/1000
+466/466 - 36s - loss: 0.9050 - val_loss: 5.3138 - 36s/epoch - 78ms/step
+Epoch 12/1000
+466/466 - 36s - loss: 0.9044 - val_loss: 5.1805 - 36s/epoch - 78ms/step
+Epoch 13/1000
+466/466 - 36s - loss: 0.9076 - val_loss: 5.4462 - 36s/epoch - 78ms/step
+Epoch 14/1000
+466/466 - 36s - loss: 0.9047 - val_loss: 5.3016 - 36s/epoch - 78ms/step
+Epoch 15/1000
+466/466 - 36s - loss: 0.8997 - val_loss: 5.7272 - 36s/epoch - 78ms/step
+Epoch 16/1000
+Budget reached after epoch 16; best val_loss 4.7810
+466/466 - 36s - loss: 0.9025 - val_loss: 5.5061 - 36s/epoch - 78ms/step
+/opt/tfgpu/lib/python3.10/site-packages/tensorflow/lite/python/convert.py:953: UserWarning: Statistics for quantized inputs were expected, but not specified; continuing anyway.
+  warnings.warn(
+Summary on the non-converted ops:
+---------------------------------
+ * Accepted dialects: tfl, builtin, func
+ * Non-Converted Ops: 2, Total Ops 94, % non-converted = 2.13 %
+ * 2 ARITH ops
+
+- arith.constant:    2 occurrences  (i32: 2)
+
+
+
+  (uq_8: 7)
+  (uq_8: 1)
+  (uq_8: 16)
+  (uq_8: 9)
+  (f32: 1)
+  (uq_8: 1)
+  (uq_8: 25, uq_32: 25)
+  (uq_8: 2)
+  (uq_8: 2)
+fully_quantize: 0, inference_type: 6, input_inference_type: INT8, output_inference_type: INT8
+Wrote /root/vox/artifacts_T5q/voxhod_qat_int8.tflite (77,624 bytes)
+QAT fine-tuning done.
