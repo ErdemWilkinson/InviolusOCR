@@ -1,0 +1,51 @@
+{
+ "cover": 0.97,
+ "stage2": "VS8",
+ "pairs": {
+  "C8_1": {
+   "stage1": "K1L",
+   "tau": 0.13,
+   "passed_val": 0.7355512902537854,
+   "passed_test": 0.5945252352437981,
+   "passed_wisard": 0.7765151515151515,
+   "passed_nomad_tn_test": 0.6085,
+   "val_people_covered": 0.9756427604871448
+  },
+  "C8_2": {
+   "stage1": "K2L",
+   "tau": 0.17,
+   "passed_val": 0.6783962465344423,
+   "passed_test": 0.5280866837753065,
+   "passed_wisard": 0.5841224747474747,
+   "passed_nomad_tn_test": 0.5115,
+   "val_people_covered": 0.9702300405953992
+  },
+  "C8_3": {
+   "stage1": "K3L",
+   "tau": 0.14,
+   "passed_val": 0.6865003198976327,
+   "passed_test": 0.5631593954947248,
+   "passed_wisard": 0.6691919191919192,
+   "passed_nomad_tn_test": 0.5715,
+   "val_people_covered": 0.9715832205683356
+  },
+  "C8_4": {
+   "stage1": "K4",
+   "tau": 0.17,
+   "passed_val": 0.6856472595436127,
+   "passed_test": 0.5677216994582264,
+   "passed_wisard": 0.6358901515151515,
+   "passed_nomad_tn_test": 0.545,
+   "val_people_covered": 0.9702300405953992
+  },
+  "C8_5": {
+   "stage1": "K5",
+   "tau": 0.17,
+   "passed_val": 0.54553209639582,
+   "passed_test": 0.43741089250071286,
+   "passed_wisard": 0.4914772727272727,
+   "passed_nomad_tn_test": 0.4905,
+   "val_people_covered": 0.9702300405953992
+  }
+ }
+}

@@ -1,0 +1,20 @@
+WARNING:tensorflow:From C:\Users\erdem\OneDrive\Masaüstü\AI EĞİTİM\voice\.venv\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+running VS8 on val (4689 tiles)
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+WARNING: Attempting to use a delegate that only supports static-sized tensors with a graph that has dynamic-sized tensors (tensor#216 is a dynamic-sized tensor).
+running VS8 on test (3507 tiles)
+running VS8 on wisard (6336 tiles)
+running VS8 on nomad_tn_test (2000 tiles)
+
+target val recall 0.781 (threshold chosen on val, scored on test / wisard)
+GA1      t=0.20 val    rec 0.781 prec 0.168 FA 0.610 F1 0.276 small 0.752
+GA1      t=0.20 test   rec 0.801 prec 0.130 FA 0.569 F1 0.224 small 0.782
+GA1      t=0.20 wisard rec 0.654 prec 0.136 FA 0.837 F1 0.225 small 0.396
+GA1      nomad_tn_test FA/tile by distance: 10 m 1.718, 30 m 1.272, 50 m 1.570, 70 m 1.562, 90 m 1.680
+GA1      t=0.20 nomad_tn_test rec 0.000 prec 0.000 FA 1.560 F1 0.000 small 0.000
+VS8      t=0.23 val    rec 0.790 prec 0.630 FA 0.073 F1 0.701 small 0.762
+VS8      t=0.23 test   rec 0.777 prec 0.576 FA 0.061 F1 0.661 small 0.761  d_rec [-0.064,+0.014] d_prec [+0.411,+0.484] d_FA [-0.540,-0.475]
+VS8      t=0.23 wisard rec 0.508 prec 0.700 FA 0.044 F1 0.589 small 0.297  d_rec [-0.170,-0.120] d_prec [+0.541,+0.589] d_FA [-0.823,-0.764]
+VS8      nomad_tn_test FA/tile by distance: 10 m 0.098, 30 m 0.198, 50 m 0.242, 70 m 0.258, 90 m 0.362
+VS8      t=0.23 nomad_tn_test rec 0.000 prec 0.000 FA 0.232 F1 0.000 small 0.000  d_rec [+0.000,+0.000] d_prec [+0.000,+0.000] d_FA [-1.455,-1.213]

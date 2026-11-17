@@ -33,3 +33,10 @@ tiles nano flags. Detections come from VoxScout only.
 - VoxScout numbers are float; int8 accuracy, P4 latency and P4 RAM are not measured. A pass here only
   justifies measuring those next, not shipping.
 - If it ships, it ships as a VoxScout-project pipeline (backbone rule); the VoxHOD nano file is unchanged.
+
+### Amendment ~18:15 (after the float C result, before any int8 number)
+Owner: "devam et otopilot". The device would run VoxScout int8, not float. Step: run the published int8 file
+(`voxhod_large_int8.tflite` = VoxScout int8, 5.2 MB) on val, test, WiSARD and NOMAD (`threshold_sweep.py`,
+4 threads, name VS8), build C8_1..C8_5 with `two_stage.py` exactly as above (stage 2 = VS8), and score
+C8 vs K with the same rule. Reported also: VS8 vs T0 (int8 loss). 40-tile check before this: correlation 0.86,
+0.30 s per tile on the laptop CPU with 4 threads.

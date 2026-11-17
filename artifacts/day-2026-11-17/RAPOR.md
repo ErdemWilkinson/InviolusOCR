@@ -58,3 +58,39 @@ başına süre kabaca nano + yarısı kadar VoxScout; VoxScout P4'te birkaç san
 
 `analysis/arms_hier_CvK.json`/`.txt`, `analysis/topk_CvK.json`/`.txt`, `analysis/two_stage_T0.json` (τ ve
 geçen kare oranları).
+
+## Ek (akşam): cihazdaki dosya, VoxScout int8 (C8) — kapıyı geçti, çekinceli
+
+Sahip: "devam et otopilot". Cihazda float değil int8 çalışır. Plan eki 18:15 (int8 sayısından önce yazıldı):
+yayımlanan int8 dosyası (5,2 MB) dört bölümün hepsinde çalıştırıldı (4 iş parçacığı, 18:07-19:28), C8_1..C8_5
+aynı kapı ve aynı kuralla kuruldu.
+
+| C8 − K | K | C8 | Fark [95% GA] | Koşul | Durum |
+|---|---:|---:|---|---|---|
+| A: HERIDAL recall, 0,3 FA/karede | 77,0% | 83,1% | +6,1 [+1,6, +10,5] | alt > 0 | **geçti** |
+| B: NOMAD FA/kare, bütçe eşiği | 1,020 | 0,844 | −0,175 [−0,316, −0,046] | üst < 0 | **geçti** |
+| Koruma: HERIDAL recall, bütçe eşiği | 78,4% | 84,6% | +6,2 [+2,2, +10,6] | alt ≥ −2 | geçti |
+| Koruma: WiSARD top-2 kare isabeti | 88,8% | 100% | +11,2 | ≥ −3 | geçti |
+| Koruma: HERIDAL FA/kare, bütçe eşiği | 0,335 | 0,334 | −0,001 | ≤ +0,05 | geçti |
+
+Aynı recall'da (tanımlayıcı): HERIDAL FA 0,243 → 0,056, NOMAD FA 0,792 → 0,223 (yaklaşık 4 kat az).
+
+**int8 kaybı (VoxScout int8 − float, tek başına):** 0,3 FA'da recall −4,0 puan [−6,7, −1,5]; aynı recall'da
+NOMAD FA 0,139 → 0,232. int8 belirgin biçimde daha kötü, ama hâlâ nano'nun çok önünde.
+
+**Çekinceler (önemli):**
+- **Aynı test setine ikinci bakış.** Float C kaldı, int8 C8 geçti. int8 adımı sayılardan önce yazıldı, ama
+  geçmesinin bir nedeni eşik kalibrasyonu: int8'in doğrulama FA'sı biraz daha yüksek olduğu için bütçe eşiği
+  0,04 yerine 0,06'ya düştü ve testte bütçe aşılmadı. Yani sonuç eşik seçimine duyarlı; tek başına kanıt sayılmaz.
+- **WiSARD recall düşüyor.** Kural top-2 kare isabetine bakıyor (100%), ama doğrulamada eşleşen eşikte WiSARD
+  insan recall'u K 57,5% → C8 50,7% (−6,8 puan). VoxScout küçük insanlarda zayıf. Operatör kare kare bakıyorsa
+  sorun değil; tek tek insan sayılıyorsa sorun.
+- Beş koşu tek VoxScout modelini paylaşıyor; aralık onun değişkenliğini içermiyor.
+- **Cihaz maliyeti ölçülmedi:** nano karelerin %44-78'ini geçiriyor; VoxScout'un P4'teki süresi ve RAM'i
+  bilinmiyor (dizüstü CPU 4 iş parçacığında 0,30 sn/kare).
+
+**Karar:** plana göre geçiş yayımlamak değil, bir sonraki ölçümü haklı çıkarır: VoxScout int8'i P4'te çalıştırmak
+(süre, RAM; kart bağlı olmalı). Hat bir VoxScout projesi ürünü olur; VoxHOD nano dosyası değişmez.
+
+Dosyalar: `analysis/arms_hier_C8vK.*`, `analysis/arms_hier_VS8vT0.*`, `analysis/topk_C8vK.*`,
+`analysis/two_stage_VS8.json`, `analysis/sweep_VS8.log`, `status.txt`.
