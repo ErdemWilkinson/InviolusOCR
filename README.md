@@ -127,8 +127,19 @@ confusion; they are in the git history up to commit `d210a8b`.
 | S3 | 2026-11-08 | P3's architecture from scratch, 1 GPU hour (control) | 274,450 | 298 KB | 70.3% | 42.4% | 29.5% | control only |
 | **Pt** | 2026-11-08 | P2 pruned to 50% width, 1 GPU hour | 144,330 | 171 KB | 65.4% | 34.6% | 21.9% | **on Hugging Face as Nano** |
 | St | 2026-11-08 | Pt's architecture from scratch, 1 GPU hour (control) | 144,330 | 171 KB | 63.9% | 32.3% | 17.4% | control only |
+| **D_QAT / P2_QAT / Pt_QAT** | 2026-11-24 | QAT unblocked (`scripts/qat_conv2d.py`: `Conv1D(5) → Conv2D((5,1))` + `StandaloneBNQuantizeConfig`, 10–14 min QAT per model) | 561K / 274K / 144K | **590 / 304 / 173 KB** | —* | **57.8% / 49.4% / 39.5%** | **49.9% / 39.3% / 27.4%** | **on GitHub Release & HF** (`*_qat_int8.tflite`; original PTQ files kept) |
 
-n/m: not measured.
+n/m: not measured. *QAT models were scored on the full 19,408-row `split_manifest.json` held-out split (Base 67.9%, Small 60.8%, Nano 52.4% exact; CER 9.7%, 12.5%, 16.1%); `tstr_test` (2,078) and `donut_test` (2,563) are identical rows to the PTQ baselines above.
+
+#### Quantization-aware training (`scripts/qat_conv2d.py`, 2026-11-24)
+
+TF-MOT previously blocked QAT because it cannot fold `BatchNormalization` after `Conv1D` or after `Conv2D(activation="relu")`. Rewriting the four dilated `Conv1D(5)` sequence blocks as mathematically equivalent `Conv2D((5, 1))` blocks (copying 100% of trained float weights verbatim, max diff `< 3.2e-4`) and applying a `StandaloneBNQuantizeConfig` to the four post-ReLU body BNs lets TF-MOT fake-quantize 35/36 layers and recover all PTQ quantization loss (plus extra accuracy):
+
+| Model, int8 | PTQ → **QAT** size | TS-TR exact (PTQ → **QAT**) | TS-TR CER | Donut exact (PTQ → **QAT**) | Donut CER |
+|---|---:|---:|---:|---:|---:|
+| **Base (`D_QAT`)** | 598 → **590 KB** | 56.2% → **57.8% (+1.6)** | 18.8% → **17.6%** | 46.5% → **49.9% (+3.4)** | 12.6% → **10.8%** |
+| **Small (`P2_QAT`)** | 298 → **304 KB** | 46.0% → **49.4% (+3.4)** | 23.9% → **21.5%** | 33.2% → **39.3% (+6.1)** | 18.1% → **14.9%** |
+| **Nano (`Pt_QAT`)** | 171 → **173 KB** | 34.6% → **39.5% (+4.9)** | 31.4% → **27.3%** | 21.9% → **27.4% (+5.5)** | 24.7% → **19.8%** |
 
 What worked and what did not:
 
@@ -230,7 +241,7 @@ A step ships only if it passes its gate.
 | Prune to tiny's size (width 0.5) | The current tiny was trained from scratch | At 171 KB: held-out > 64.4% and TS-TR > 32.6% | **passed** 2026-11-08: Pt 65.4% / 34.6%, paired test p ≤ 0.016 |
 | Publish Pt in place of tiny, and a 298 KB model | Better at the same size; fill the gap between tiny and D | The gates above, plus the ESP32-P4 check | **done** 2026-11-08: published as Nano and Small |
 | Measure Nano byte for byte on the ESP32-P4 | Its speed is taken from the earlier tiny (same architecture) | Same speed as tiny, accuracy within the noise of the PC | open |
-| Quantization-aware training for the pruned model | P2 loses 4.1 points on donut when converted to int8 | float-to-int8 loss ≤ 2 points on every set | **blocked:** TF-MOT cannot quantize the BatchNorm after Conv1D; needs BN folding or a custom QuantizeConfig |
+| Quantization-aware training for the pruned model | P2 loses 4.1 points on donut when converted to int8 | float-to-int8 loss ≤ 2 points on every set | **passed 2026-11-24:** unblocked via `Conv2D((5,1))` + `StandaloneBNQuantizeConfig` (`scripts/qat_conv2d.py`); Base +1.6/+3.4, Small +3.4/+6.1, Nano +4.9/+5.5 on TS-TR/Donut, published alongside PTQ files |
 | Feed the GPU faster | The GPU is only about 30% busy | Epoch time below 100 s (now 155-180 s) | open; uint8 images inside tf.data did not help (180 s), so the input is not the bottleneck |
 | More real scene-text data | TS-TR is the weakest set | The licence allows it; no orkungedik data | open |
 
